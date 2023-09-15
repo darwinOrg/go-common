@@ -14,4 +14,5 @@ const (
 	PageSize  = "pageSize"
 	Token     = "token"
 	RemoteIp  = "remote-ip"
+	CompanyId = "company-id"
 )

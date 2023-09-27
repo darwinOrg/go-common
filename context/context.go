@@ -4,7 +4,8 @@ type DgContext struct {
 	TraceId   string
 	UserId    int64
 	OpId      int64
-	Roles     []string
+	Roles     string
+	BizTypes  string
 	GroupId   int64
 	Platform  string
 	UserAgent string

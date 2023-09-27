@@ -5,6 +5,7 @@ const (
 	UID       = "uid"
 	OpId      = "op-id"
 	Roles     = "roles"
+	BizTypes  = "biz-types"
 	GroupId   = "group-id"
 	Platform  = "platform"
 	UserAgent = "user_agent"
@@ -15,5 +16,4 @@ const (
 	Token     = "token"
 	RemoteIp  = "remote-ip"
 	CompanyId = "company-id"
-	BizTypes  = "biz-types"
 )

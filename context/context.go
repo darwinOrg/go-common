@@ -5,7 +5,7 @@ type DgContext struct {
 	UserId    int64
 	OpId      int64
 	Roles     string
-	BizTypes  string
+	BizTypes  int
 	GroupId   int64
 	Platform  string
 	UserAgent string

@@ -4,7 +4,7 @@ const (
 	TraceId   = "trace-id"
 	UID       = "uid"
 	OpId      = "op-id"
-	Role      = "role"
+	Roles     = "roles"
 	GroupId   = "group-id"
 	Platform  = "platform"
 	UserAgent = "user_agent"
@@ -15,4 +15,5 @@ const (
 	Token     = "token"
 	RemoteIp  = "remote-ip"
 	CompanyId = "company-id"
+	BizTypes  = "biz-types"
 )

@@ -1,20 +1,21 @@
 package dgctx
 
 type DgContext struct {
-	TraceId   string
-	UserId    int64
-	OpId      int64
-	RunAs     int64
-	Roles     string
-	BizTypes  int
-	GroupId   int64
-	Platform  string
-	UserAgent string
-	Lang      string
-	GoId      uint64
-	Token     string
-	RemoteIp  string
-	Extra     map[string]any
+	TraceId    string
+	UserId     int64
+	OpId       int64
+	RunAs      int64
+	Roles      string
+	BizTypes   int
+	GroupId    int64
+	Platform   string
+	UserAgent  string
+	Lang       string
+	GoId       uint64
+	Token      string
+	ShareToken string
+	RemoteIp   string
+	Extra      map[string]any
 }
 
 func (ctx *DgContext) SetExtraKeyValue(key string, val any) {

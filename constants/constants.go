@@ -4,6 +4,7 @@ const (
 	TraceId   = "trace-id"
 	UID       = "uid"
 	OpId      = "op-id"
+	RunAs     = "run-as"
 	Roles     = "roles"
 	BizTypes  = "biz-types"
 	GroupId   = "group-id"

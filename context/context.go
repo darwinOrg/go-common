@@ -15,6 +15,7 @@ type DgContext struct {
 	Token      string
 	ShareToken string
 	RemoteIp   string
+	CompanyId  int64
 	Extra      map[string]any
 }
 

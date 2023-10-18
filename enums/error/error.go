@@ -26,6 +26,7 @@ func SimpleDgError(msg string) *DgError {
 var (
 	SYSTEM_ERROR = &DgError{5001, "系统错误"}
 	SYSTEM_BUSY  = &DgError{5002, "系统繁忙"}
+	TIME_OUT     = &DgError{5003, "请求超时"}
 
 	ARGUMENT_NOT_VALID     = &DgError{4001, "无效参数"}
 	INVALID_TOKEN          = &DgError{4002, "无效token"}

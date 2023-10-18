@@ -26,6 +26,7 @@ func SimpleDgErrorML(msgCode string) *DgErrorML {
 var (
 	SYSTEM_ERROR_ML = &DgErrorML{5001, "common.system_error"}
 	SYSTEM_BUSY_ML  = &DgErrorML{5002, "common.system_invalid"}
+	TIME_OUT_ML     = &DgError{5003, "common.time_out"}
 
 	ARGUMENT_NOT_VALID_ML    = &DgErrorML{4001, "common.argument_not_valid"}
 	DUPLICATE_PRIMARY_KEY_ML = &DgErrorML{4004, "common.duplicate_primary_key"}

@@ -18,4 +18,5 @@ const (
 	ShareToken = "s-token"
 	RemoteIp   = "remote-ip"
 	CompanyId  = "company-id"
+	Product    = "product"
 )

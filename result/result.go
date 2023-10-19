@@ -5,7 +5,6 @@ import (
 	"fmt"
 	dgerr "github.com/darwinOrg/go-common/enums/error"
 	dgsys "github.com/darwinOrg/go-common/sys"
-	"go/types"
 )
 
 type Result[T any] struct {
@@ -24,7 +23,7 @@ func (r *Result[T]) String() string {
 	}
 }
 
-var simpleSuccess = &Result[types.Nil]{
+var simpleSuccess = &Result[Void]{
 	Success: true,
 	Code:    0,
 }
@@ -37,7 +36,7 @@ func Success[T any](data T) *Result[T] {
 	}
 }
 
-func SimpleSuccess() *Result[types.Nil] {
+func SimpleSuccess() *Result[Void] {
 	return simpleSuccess
 }
 

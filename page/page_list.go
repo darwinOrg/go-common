@@ -39,6 +39,10 @@ func ListOf[T any](pageNo int, pageSize int, totalCount int, list []*T) *PageLis
 	}
 }
 
+func EmptyPageList[T any](pageNo int, pageSize int) *PageList[T] {
+	return ListOf[T](pageNo, pageSize, 0, []*T{})
+}
+
 func calcTotalPages(totalCount int, pageSize int) int {
 	if totalCount == 0 {
 		return 0

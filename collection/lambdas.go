@@ -34,12 +34,46 @@ func MapToList[T any, V any](slice []T, mapFunc Function[T, V]) []V {
 	return list
 }
 
+func FlatMapToList[T any, V any](slice []T, mapFunc Function[T, []V]) []V {
+	if len(slice) == 0 {
+		return []V{}
+	}
+
+	list := make([]V, 0, len(slice))
+	for _, t := range slice {
+		vs := mapFunc(t)
+		for _, v := range vs {
+			list = append(list, v)
+		}
+	}
+
+	return list
+}
+
 func FilterAndMapToList[T any, V any](slice []T, predicate Predicate[T], mapFunc Function[T, V]) []V {
 	return MapToList(FilterList(slice, predicate), mapFunc)
 }
 
 func MapToSet[T any, V comparable](slice []T, mapFunc Function[T, V]) []V {
 	list := MapToList(slice, mapFunc)
+	if len(list) == 0 {
+		return list
+	}
+
+	mp := map[V]bool{}
+	set := make([]V, 0)
+	for _, v := range list {
+		if !mp[v] {
+			set = append(set, v)
+			mp[v] = true
+		}
+	}
+
+	return set
+}
+
+func FlatMapToSet[T any, V comparable](slice []T, mapFunc Function[T, []V]) []V {
+	list := FlatMapToList(slice, mapFunc)
 	if len(list) == 0 {
 		return list
 	}

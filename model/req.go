@@ -5,7 +5,7 @@ type IdReq struct {
 }
 
 type IdListReq struct {
-	IdList []int64 `json:"idList" binding:"required,lt=0"`
+	IdList []int64 `json:"idList" binding:"required,gt=0"`
 }
 
 type StringReq struct {
@@ -13,5 +13,5 @@ type StringReq struct {
 }
 
 type StringListReq struct {
-	Values string `json:"values" binding:"required,lt=0"`
+	Values string `json:"values" binding:"required,gt=0"`
 }

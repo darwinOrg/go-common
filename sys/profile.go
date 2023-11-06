@@ -18,6 +18,10 @@ func GetProfile() string {
 	return profile
 }
 
+func IsQa() bool {
+	return GetProfile() == "qa"
+}
+
 func IsProd() bool {
 	return GetProfile() == "prod"
 }

@@ -1,6 +1,9 @@
 package dgsys
 
-import "os"
+import (
+	"github.com/darwinOrg/go-common/constants"
+	"os"
+)
 
 var profile = ""
 
@@ -9,7 +12,7 @@ func GetProfile() string {
 		return profile
 	}
 
-	env, ok := os.LookupEnv("profile")
+	env, ok := os.LookupEnv(constants.Profile)
 	if !ok || len(env) == 0 {
 		return ""
 	}

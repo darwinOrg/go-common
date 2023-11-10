@@ -1,6 +1,7 @@
 package constants
 
 const (
+	Profile    = "profile"
 	TraceId    = "trace-id"
 	UID        = "uid"
 	OpId       = "op-id"

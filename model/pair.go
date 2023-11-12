@@ -17,6 +17,11 @@ type StringCodeNamePair struct {
 	Name string `json:"name"`
 }
 
+type KeyValuePair[K any, V any] struct {
+	Key   K `json:"key"`
+	Value V `json:"value"`
+}
+
 func (pair *IdNamePair) String() string {
 	js, err := json.Marshal(pair)
 	if err != nil {

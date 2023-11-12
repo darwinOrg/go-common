@@ -1,6 +1,8 @@
 package model
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type IntCodeNamePair struct {
 	Code int    `json:"code"`

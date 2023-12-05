@@ -23,7 +23,7 @@ func (r *Result[T]) String() string {
 	}
 }
 
-var simpleSuccess = &Result[Void]{
+var simpleSuccess = &Result[*Void]{
 	Success: true,
 	Code:    0,
 }
@@ -36,7 +36,7 @@ func Success[T any](data T) *Result[T] {
 	}
 }
 
-func SimpleSuccess() *Result[Void] {
+func SimpleSuccess() *Result[*Void] {
 	return simpleSuccess
 }
 

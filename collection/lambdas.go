@@ -205,3 +205,32 @@ func Sort[T any](slice []T, less Less[*T]) {
 		return less(t1, t2)
 	}).Sort(slice)
 }
+
+func Contains[T comparable](slice []T, t T) bool {
+	if len(slice) == 0 {
+		return false
+	}
+
+	return AnyMatch(slice, func(s T) bool {
+		return s == t
+	})
+}
+
+func MergeToList[T any](slices ...[]T) []T {
+	if len(slices) == 0 {
+		return []T{}
+	}
+
+	var newSlice []T
+	for _, slice := range slices {
+		if len(slice) > 0 {
+			newSlice = append(newSlice, slice...)
+		}
+	}
+
+	return newSlice
+}
+
+func MergeToSet[T comparable](slices ...[]T) []T {
+	return DeDupToSet(MergeToList(slices...))
+}

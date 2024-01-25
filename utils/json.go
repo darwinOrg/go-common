@@ -32,7 +32,7 @@ func MustConvertJsonStringToBean[T any](str string) *T {
 }
 
 func ConvertJsonStringToBeanList[T any](str string) ([]*T, error) {
-	return ConvertJsonStringToBeanList[*T](str)
+	return ConvertJsonStringToList[*T](str)
 }
 
 func ConvertJsonStringToList[T any](str string) ([]T, error) {

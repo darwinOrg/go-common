@@ -1,7 +1,12 @@
 package dgcoll
 
+import (
+	"github.com/darwinOrg/go-common/utils"
+)
+
 type Predicate[T any] func(t T) bool
 type Function[T any, V any] func(t T) V
+type Less[T any] func(t1 T, t2 T) bool
 
 func Identity[T any](t T) T { return t }
 
@@ -189,4 +194,14 @@ func FindFirst[T any](slice []T, predicate Predicate[T], defaultValue T) T {
 	}
 
 	return defaultValue
+}
+
+func Sort[T any](slice []T, less Less[*T]) {
+	if len(slice) < 2 {
+		return
+	}
+
+	utils.Cmp[T](func(t1, t2 *T) bool {
+		return less(t1, t2)
+	}).Sort(slice)
 }

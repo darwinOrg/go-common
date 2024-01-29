@@ -2,6 +2,8 @@ package dgcoll
 
 import (
 	"github.com/darwinOrg/go-common/utils"
+	"strconv"
+	"strings"
 )
 
 type Predicate[T any] func(t T) bool
@@ -206,6 +208,18 @@ func Sort[T any](slice []T, less Less[*T]) {
 	}).Sort(slice)
 }
 
+func SortAsc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[*T, V]) {
+	Sort(slice, func(t1, t2 *T) bool {
+		return mapFunc(t1) < mapFunc(t2)
+	})
+}
+
+func SortDesc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[*T, V]) {
+	Sort(slice, func(t1, t2 *T) bool {
+		return mapFunc(t1) > mapFunc(t2)
+	})
+}
+
 func Contains[T comparable](slice []T, t T) bool {
 	if len(slice) == 0 {
 		return false
@@ -233,4 +247,13 @@ func MergeToList[T any](slices ...[]T) []T {
 
 func MergeToSet[T comparable](slices ...[]T) []T {
 	return DeDupToSet(MergeToList(slices...))
+}
+
+func JoinInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, sep string) string {
+	if len(slice) == 0 {
+		return ""
+	}
+
+	strs := MapToList(slice, func(t T) string { return strconv.FormatInt(int64(t), 10) })
+	return strings.Join(strs, sep)
 }

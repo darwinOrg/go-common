@@ -2,8 +2,6 @@ package dgctx
 
 import "sync"
 
-var initUnsafeExtraOnce sync.Once
-
 type DgContext struct {
 	TraceId     string `json:"traceId,omitempty"`
 	UserId      int64  `json:"userId,omitempty"`
@@ -35,9 +33,10 @@ func (ctx *DgContext) GetExtraValue(key string) any {
 }
 
 func (ctx *DgContext) SetUnsafeExtraKeyValue(key string, val any) {
-	initUnsafeExtraOnce.Do(func() {
+	if ctx.unsafeExtra == nil {
 		ctx.unsafeExtra = make(map[string]any)
-	})
+	}
+
 	ctx.unsafeExtra[key] = val
 }
 

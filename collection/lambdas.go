@@ -257,3 +257,18 @@ func JoinInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | in
 	strs := MapToList(slice, func(t T) string { return strconv.FormatInt(int64(t), 10) })
 	return strings.Join(strs, sep)
 }
+
+func SplitToInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](str string, sep string) []T {
+	if len(str) == 0 {
+		return []T{}
+	}
+
+	var jsonStr string
+	if sep != "," {
+		jsonStr = "[" + strings.ReplaceAll(str, sep, ",") + "]"
+	} else {
+		jsonStr = "[" + str + "]"
+	}
+
+	return utils.MustConvertJsonStringToList[T](jsonStr)
+}

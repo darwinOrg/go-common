@@ -44,6 +44,12 @@ func ConvertJsonStringToList[T any](str string) ([]T, error) {
 	return t, nil
 }
 
+func MustConvertJsonStringToList[T any](str string) []T {
+	var t []T
+	_ = json.Unmarshal([]byte(str), &t)
+	return t
+}
+
 func ConvertJsonBytesToBean[T any](bytes []byte) (*T, error) {
 	t := new(T)
 	err := json.Unmarshal(bytes, t)

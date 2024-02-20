@@ -220,6 +220,23 @@ func SortDesc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint
 	})
 }
 
+func SortByIds[T any, V comparable](slice []T, ids []V, mapFunc Function[T, V]) []T {
+	if len(slice) == 0 {
+		return []T{}
+	}
+	if len(ids) == 0 {
+		return slice
+	}
+
+	sliceMap := Trans2Map(slice, mapFunc)
+	newSlice := MapToList(ids, func(id V) T {
+		return sliceMap[id]
+	})
+	return FilterList(newSlice, func(t T) bool {
+		return t != nil
+	})
+}
+
 func Contains[T comparable](slice []T, t T) bool {
 	if len(slice) == 0 {
 		return false

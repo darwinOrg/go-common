@@ -229,12 +229,14 @@ func SortByIds[T any, V comparable](slice []T, ids []V, mapFunc Function[T, V]) 
 	}
 
 	sliceMap := Trans2Map(slice, mapFunc)
-	newSlice := MapToList(ids, func(id V) T {
-		return sliceMap[id]
-	})
-	return FilterList(newSlice, func(t T) bool {
-		return t != nil
-	})
+	var newSlice []T
+	for _, id := range ids {
+		value, ok := sliceMap[id]
+		if ok {
+			newSlice = append(newSlice, value)
+		}
+	}
+	return newSlice
 }
 
 func Contains[T comparable](slice []T, t T) bool {

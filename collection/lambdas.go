@@ -198,24 +198,24 @@ func FindFirst[T any](slice []T, predicate Predicate[T], defaultValue T) T {
 	return defaultValue
 }
 
-func Sort[T any](slice []T, less Less[*T]) {
+func Sort[T any](slice []T, less Less[T]) {
 	if len(slice) < 2 {
 		return
 	}
 
 	utils.Cmp[T](func(t1, t2 *T) bool {
-		return less(t1, t2)
+		return less(*t1, *t2)
 	}).Sort(slice)
 }
 
-func SortAsc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[*T, V]) {
-	Sort(slice, func(t1, t2 *T) bool {
+func SortAsc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[T, V]) {
+	Sort(slice, func(t1, t2 T) bool {
 		return mapFunc(t1) < mapFunc(t2)
 	})
 }
 
-func SortDesc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[*T, V]) {
-	Sort(slice, func(t1, t2 *T) bool {
+func SortDesc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, mapFunc Function[T, V]) {
+	Sort(slice, func(t1, t2 T) bool {
 		return mapFunc(t1) > mapFunc(t2)
 	})
 }

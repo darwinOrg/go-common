@@ -1,6 +1,9 @@
 package dgctx
 
-import "sync"
+import (
+	"github.com/darwinOrg/go-common/utils"
+	"sync"
+)
 
 type DgContext struct {
 	TraceId     string `json:"traceId,omitempty"`
@@ -46,4 +49,15 @@ func (ctx *DgContext) GetUnsafeExtraValue(key string) any {
 	}
 
 	return ctx.unsafeExtra[key]
+}
+
+func (ctx *DgContext) Clone() *DgContext {
+	clone := utils.MustConvertToNewBeanByJson[DgContext](ctx)
+	clone.unsafeExtra = ctx.unsafeExtra
+	ctx.safeExtra.Range(func(key, val any) bool {
+		clone.safeExtra.Store(key, val)
+		return true
+	})
+
+	return clone
 }

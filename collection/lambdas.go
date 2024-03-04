@@ -301,7 +301,7 @@ func Shuffle[T any](slice []T) {
 	rand.Shuffle(len(slice), func(i, j int) { slice[i], slice[j] = slice[j], slice[i] })
 }
 
-func Remove[T comparable](slice []T, elements ...T) []T {
+func Remove[T comparable](slice []T, elements []T) []T {
 	if len(slice) == 0 {
 		return []T{}
 	}

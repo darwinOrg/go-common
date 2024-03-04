@@ -2,6 +2,7 @@ package dgcoll
 
 import (
 	"github.com/darwinOrg/go-common/utils"
+	"math/rand"
 	"strconv"
 	"strings"
 )
@@ -290,4 +291,12 @@ func SplitToInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 |
 	}
 
 	return utils.MustConvertJsonStringToList[T](jsonStr)
+}
+
+func Shuffle[T any](slice []T) {
+	if len(slice) == 0 {
+		return
+	}
+
+	rand.Shuffle(len(slice), func(i, j int) { slice[i], slice[j] = slice[j], slice[i] })
 }

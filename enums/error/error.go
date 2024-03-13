@@ -40,6 +40,7 @@ var (
 	NO_PERMISSION     = &DgError{4009, "无权限"}
 	ILLEGAL_OPERATION = &DgError{4010, "非法操作"}
 
+	RECORD_EXISTS         = &DgError{4013, "记录已存在"}
 	RECORD_NOT_EXISTS     = &DgError{4014, "记录不存在"}
 	DISABLED_USER         = &DgError{4015, "用户已被禁用"}
 	EMAIL_REGISTERED      = &DgError{4016, "邮箱已被注册"}

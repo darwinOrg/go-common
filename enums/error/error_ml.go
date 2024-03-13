@@ -34,5 +34,6 @@ var (
 	USER_NOT_EXISTS_ML       = &DgErrorML{4007, "common.user_not_exist"}
 	NO_PERMISSION_ML         = &DgErrorML{4009, "common.no_permission"}
 	ILLEGAL_OPERATION_ML     = &DgErrorML{4010, "common.illegal_operation"}
+	RECORD_EXISTS_ML         = &DgErrorML{4013, "common.record_exists"}
 	RECORD_NOT_EXISTS_ML     = &DgErrorML{4014, "common.record_not_exists"}
 )

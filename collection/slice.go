@@ -250,6 +250,18 @@ func Contains[T comparable](slice []T, t T) bool {
 	})
 }
 
+func ContainsAny[T comparable](slice1 []T, slice2 []T) bool {
+	if len(slice1) == 0 || len(slice2) == 0 {
+		return false
+	}
+
+	return AnyMatch(slice1, func(t1 T) bool {
+		return AnyMatch(slice2, func(t2 T) bool {
+			return t1 == t2
+		})
+	})
+}
+
 func MergeToList[T any](slices ...[]T) []T {
 	if len(slices) == 0 {
 		return []T{}

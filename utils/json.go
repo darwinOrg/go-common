@@ -1,4 +1,4 @@
-package dgutils
+package utils
 
 import "encoding/json"
 

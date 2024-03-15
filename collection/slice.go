@@ -1,7 +1,7 @@
 package dgcoll
 
 import (
-	"github.com/darwinOrg/go-common/utils"
+	dgutils "github.com/darwinOrg/go-common/utils"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -204,7 +204,7 @@ func Sort[T any](slice []T, less Less[T]) {
 		return
 	}
 
-	utils.Cmp[T](func(t1, t2 *T) bool {
+	dgutils.Cmp[T](func(t1, t2 *T) bool {
 		return less(*t1, *t2)
 	}).Sort(slice)
 }
@@ -302,7 +302,7 @@ func SplitToInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 |
 		jsonStr = "[" + strings.ReplaceAll(str, sep, ",") + "]"
 	}
 
-	return utils.MustConvertJsonStringToList[T](jsonStr)
+	return dgutils.MustConvertJsonStringToList[T](jsonStr)
 }
 
 func Shuffle[T any](slice []T) {

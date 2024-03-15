@@ -1,4 +1,4 @@
-package utils
+package dgutils
 
 func CalcTextSimilarity(first, second string, percent *float64) int {
 	var similarText func(string, string, int, int) int

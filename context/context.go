@@ -52,7 +52,7 @@ func (ctx *DgContext) GetUnsafeExtraValue(key string) any {
 }
 
 func (ctx *DgContext) Clone() *DgContext {
-	clone := utils.MustConvertToNewBeanByJson[DgContext](ctx)
+	clone := dgutils.MustConvertToNewBeanByJson[DgContext](ctx)
 	clone.unsafeExtra = ctx.unsafeExtra
 	ctx.safeExtra.Range(func(key, val any) bool {
 		clone.safeExtra.Store(key, val)

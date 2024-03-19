@@ -7,12 +7,6 @@ import (
 	"strings"
 )
 
-type Predicate[T any] func(t T) bool
-type Function[T any, V any] func(t T) V
-type Less[T any] func(t1 T, t2 T) bool
-
-func Identity[T any](t T) T { return t }
-
 func FilterList[T any](slice []T, predicate Predicate[T]) []T {
 	if len(slice) == 0 {
 		return []T{}
@@ -143,6 +137,25 @@ func GroupBy[T any, K comparable](slice []T, keyFunc Function[T, K]) map[K][]T {
 	return mp
 }
 
+func Extract2KeyListMap[T any, K comparable, V any](slice []T, keyFunc Function[T, K], valueFunc Function[T, V]) map[K][]V {
+	if len(slice) == 0 {
+		return map[K][]V{}
+	}
+
+	mp := map[K][]V{}
+	for _, t := range slice {
+		k := keyFunc(t)
+		v := valueFunc(t)
+		if mp[k] == nil {
+			mp[k] = []V{v}
+		} else {
+			mp[k] = append(mp[k], v)
+		}
+	}
+
+	return mp
+}
+
 func AnyMatch[T any](slice []T, predicate Predicate[T]) bool {
 	if len(slice) == 0 {
 		return false
@@ -257,6 +270,18 @@ func ContainsAny[T comparable](slice1 []T, slice2 []T) bool {
 
 	return AnyMatch(slice1, func(t1 T) bool {
 		return AnyMatch(slice2, func(t2 T) bool {
+			return t1 == t2
+		})
+	})
+}
+
+func ContainsAll[T comparable](slice1 []T, slice2 []T) bool {
+	if len(slice1) == 0 || len(slice2) == 0 {
+		return false
+	}
+
+	return AllMatch(slice2, func(t2 T) bool {
+		return AnyMatch(slice1, func(t1 T) bool {
 			return t1 == t2
 		})
 	})

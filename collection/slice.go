@@ -57,43 +57,28 @@ func FilterAndMapToList[T any, V any](slice []T, predicate Predicate[T], mapFunc
 }
 
 func MapToSet[T any, V comparable](slice []T, mapFunc Function[T, V]) []V {
-	list := MapToList(slice, mapFunc)
-	if len(list) == 0 {
-		return list
-	}
-
-	mp := map[V]bool{}
-	set := make([]V, 0)
-	for _, v := range list {
-		if !mp[v] {
-			set = append(set, v)
-			mp[v] = true
-		}
-	}
-
-	return set
+	return DeDupToSet(MapToList(slice, mapFunc))
 }
 
 func FlatMapToSet[T any, V comparable](slice []T, mapFunc Function[T, []V]) []V {
-	list := FlatMapToList(slice, mapFunc)
-	if len(list) == 0 {
-		return list
+	return DeDupToSet(FlatMapToList(slice, mapFunc))
+}
+
+func DeDupToSet[T comparable](slice []T) []T {
+	if len(slice) == 0 {
+		return slice
 	}
 
-	mp := map[V]bool{}
-	set := make([]V, 0)
-	for _, v := range list {
-		if !mp[v] {
+	mp := map[T]struct{}{}
+	set := make([]T, 0)
+	for _, v := range slice {
+		if _, ok := mp[v]; ok {
 			set = append(set, v)
-			mp[v] = true
+			mp[v] = struct{}{}
 		}
 	}
 
 	return set
-}
-
-func DeDupToSet[T comparable](slice []T) []T {
-	return MapToSet(slice, Identity[T])
 }
 
 func FilterAndMapToSet[T any, V comparable](slice []T, predicate Predicate[T], mapFunc Function[T, V]) []V {

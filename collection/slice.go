@@ -105,21 +105,7 @@ func Extract2Map[T any, K comparable, V any](slice []T, keyFunc Function[T, K], 
 }
 
 func GroupBy[T any, K comparable](slice []T, keyFunc Function[T, K]) map[K][]T {
-	if len(slice) == 0 {
-		return map[K][]T{}
-	}
-
-	mp := map[K][]T{}
-	for _, t := range slice {
-		k := keyFunc(t)
-		if mp[k] == nil {
-			mp[k] = []T{t}
-		} else {
-			mp[k] = append(mp[k], t)
-		}
-	}
-
-	return mp
+	return Extract2KeyListMap(slice, keyFunc, Identity[T])
 }
 
 func Extract2KeyListMap[T any, K comparable, V any](slice []T, keyFunc Function[T, K], valueFunc Function[T, V]) map[K][]V {
@@ -131,14 +117,23 @@ func Extract2KeyListMap[T any, K comparable, V any](slice []T, keyFunc Function[
 	for _, t := range slice {
 		k := keyFunc(t)
 		v := valueFunc(t)
-		if mp[k] == nil {
-			mp[k] = []V{v}
-		} else {
+		if _, ok := mp[k]; ok {
 			mp[k] = append(mp[k], v)
+		} else {
+			mp[k] = []V{v}
 		}
 	}
 
 	return mp
+}
+
+func Extract2KeySetMap[T any, K comparable, V comparable](slice []T, keyFunc Function[T, K], valueFunc Function[T, V]) map[K][]V {
+	key2ValuesMap := Extract2KeyListMap(slice, keyFunc, valueFunc)
+	for key, values := range key2ValuesMap {
+		key2ValuesMap[key] = DeDupToSet(values)
+	}
+
+	return key2ValuesMap
 }
 
 func AnyMatch[T any](slice []T, predicate Predicate[T]) bool {

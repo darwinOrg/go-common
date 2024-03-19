@@ -4,9 +4,13 @@ type Optional struct {
 	value any
 }
 
-var emptyOptional = NewOptional(nil)
+var emptyOptional = &Optional{value: nil}
 
 func NewOptional(value any) *Optional {
+	if value == nil {
+		return emptyOptional
+	}
+
 	return &Optional{value: value}
 }
 

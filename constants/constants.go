@@ -20,5 +20,5 @@ const (
 	RemoteIp      = "remote-ip"
 	CompanyId     = "company-id"
 	Product       = "product"
-	DepartmentIds = "departmentIds"
+	DepartmentIds = "department-ids"
 )

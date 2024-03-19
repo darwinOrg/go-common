@@ -1,4 +1,4 @@
-package dgcoll
+package optional
 
 type Optional struct {
 	value any

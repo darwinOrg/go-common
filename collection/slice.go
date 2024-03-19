@@ -72,7 +72,7 @@ func DeDupToSet[T comparable](slice []T) []T {
 	mp := map[T]struct{}{}
 	set := make([]T, 0)
 	for _, v := range slice {
-		if _, ok := mp[v]; ok {
+		if _, ok := mp[v]; !ok {
 			set = append(set, v)
 			mp[v] = struct{}{}
 		}

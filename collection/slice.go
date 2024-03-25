@@ -267,6 +267,17 @@ func ContainsAll[T comparable](slice1 []T, slice2 []T) bool {
 	})
 }
 
+func EqualsAll[T comparable](slice1 []T, slice2 []T) bool {
+	if len(slice1) != len(slice2) {
+		return false
+	}
+	if len(slice1) == 0 {
+		return true
+	}
+
+	return ContainsAll(slice1, slice2) && ContainsAll(slice2, slice1)
+}
+
 func MergeToList[T any](slices ...[]T) []T {
 	if len(slices) == 0 {
 		return []T{}

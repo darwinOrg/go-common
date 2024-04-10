@@ -297,6 +297,10 @@ func MergeToSet[T comparable](slices ...[]T) []T {
 	return DeDupToSet(MergeToList(slices...))
 }
 
+func JoinIntsByComma[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T) string {
+	return JoinInts(slice, ",")
+}
+
 func JoinInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T, sep string) string {
 	if len(slice) == 0 {
 		return ""
@@ -304,6 +308,10 @@ func JoinInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | in
 
 	strs := MapToList(slice, func(t T) string { return strconv.FormatInt(int64(t), 10) })
 	return strings.Join(strs, sep)
+}
+
+func SplitToIntsByComma[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](str string) []T {
+	return SplitToInts[T](str, ",")
 }
 
 func SplitToInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](str string, sep string) []T {

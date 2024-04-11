@@ -20,6 +20,7 @@ const (
 	RemoteIp       = "remote-ip"
 	CompanyId      = "company-id"
 	Product        = "product"
+	Products       = "products"
 	DepartmentIds  = "department-ids"
 	LoginPlatform  = "login-platform"
 	TargetPlatform = "target-platform"

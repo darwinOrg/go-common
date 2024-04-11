@@ -22,6 +22,7 @@ type DgContext struct {
 	RemoteIp      string  `json:"remoteIp,omitempty"`
 	CompanyId     int64   `json:"companyId,omitempty"`
 	Product       int     `json:"product,omitempty"`
+	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	safeExtra     sync.Map
 	unsafeExtra   map[string]any

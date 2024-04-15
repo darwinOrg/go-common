@@ -24,4 +24,5 @@ const (
 	DepartmentIds  = "department-ids"
 	LoginPlatform  = "login-platform"
 	TargetPlatform = "target-platform"
+	Ticket         = "ticket"
 )

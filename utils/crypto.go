@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/hmac"
+	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/base64"
@@ -24,7 +25,7 @@ func Sha256Base64Encode(key string, content string) string {
 	return base64.StdEncoding.EncodeToString(bytes)
 }
 
-func Sha1HexEncode(key string, content string) string {
+func Sha1Hex(key string, content string) string {
 	hash := hmac.New(sha1.New, []byte(key))
 	hash.Write([]byte(content))
 	bytes := hash.Sum(nil)
@@ -32,10 +33,17 @@ func Sha1HexEncode(key string, content string) string {
 	return hex.EncodeToString(bytes)
 }
 
-func Sha256HexEncode(key string, content string) string {
+func Sha256Hex(key string, content string) string {
 	hash := hmac.New(sha256.New, []byte(key))
 	hash.Write([]byte(content))
 	bytes := hash.Sum(nil)
 
 	return hex.EncodeToString(bytes)
+}
+
+func Md5Hex(content string) string {
+	h := md5.New()
+	h.Write([]byte(content))
+
+	return hex.EncodeToString(h.Sum(nil))
 }

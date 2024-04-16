@@ -267,6 +267,18 @@ func ContainsAll[T comparable](slice1 []T, slice2 []T) bool {
 	})
 }
 
+func Intersection[T comparable](slice1 []T, slice2 []T) []T {
+	if len(slice1) == 0 || len(slice2) == 0 {
+		return []T{}
+	}
+
+	return FilterList(slice1, func(t1 T) bool {
+		return AnyMatch(slice2, func(t2 T) bool {
+			return t1 == t2
+		})
+	})
+}
+
 func EqualsAll[T comparable](slice1 []T, slice2 []T) bool {
 	if len(slice1) != len(slice2) {
 		return false

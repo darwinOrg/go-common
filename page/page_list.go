@@ -28,6 +28,14 @@ func (p *PageList[T]) SetExtraKeyValue(key string, val any) {
 	p.Extra[key] = val
 }
 
+func (p *PageList[T]) GetExtraValue(key string) any {
+	if p.Extra == nil {
+		return nil
+	}
+
+	return p.Extra[key]
+}
+
 func BuildPageList[T any](pp *PageParam, totalCount int, list []*T) *PageList[T] {
 	return &PageList[T]{
 		PageNo:     pp.PageNo,

@@ -26,3 +26,8 @@ const (
 	TargetPlatform = "target-platform"
 	Ticket         = "ticket"
 )
+
+const (
+	DateFormatMonthDay   = "01-02"
+	DateFormatMonthDayCn = "01月02日"
+)

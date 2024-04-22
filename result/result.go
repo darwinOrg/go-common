@@ -52,6 +52,10 @@ func SimpleFail[T any](message string) *Result[T] {
 	return Fail[T](-1, message)
 }
 
+func SimpleFailByError(err error) *Result[*Void] {
+	return FailByError[*Void](err)
+}
+
 func FailByError[T any](err error) *Result[T] {
 	fmt.Println("fail by err: ", err)
 	switch err.(type) {

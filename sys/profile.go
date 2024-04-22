@@ -25,6 +25,10 @@ func IsQa() bool {
 	return GetProfile() == "qa"
 }
 
+func IsPre() bool {
+	return GetProfile() == "pre"
+}
+
 func IsProd() bool {
 	return GetProfile() == "prod"
 }

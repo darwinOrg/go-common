@@ -32,3 +32,7 @@ func IsPre() bool {
 func IsProd() bool {
 	return GetProfile() == "prod"
 }
+
+func IsFormalProfile() bool {
+	return IsQa() || IsPre() || IsProd()
+}

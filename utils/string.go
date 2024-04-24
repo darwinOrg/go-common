@@ -1,5 +1,15 @@
 package utils
 
+import "strings"
+
+func RepeatAndAddSeparator(s string, count int, separator string) string {
+	if count <= 1 {
+		return s
+	}
+
+	return strings.Repeat(s+separator, count) + s
+}
+
 func CalcTextSimilarity(first, second string, percent *float64) int {
 	var similarText func(string, string, int, int) int
 	similarText = func(str1, str2 string, len1, len2 int) int {

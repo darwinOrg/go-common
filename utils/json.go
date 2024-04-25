@@ -17,6 +17,10 @@ func MustConvertBeanToJsonString(obj any) string {
 }
 
 func ConvertJsonStringToBean[T any](str string) (*T, error) {
+	if len(str) == 0 {
+		return nil, nil
+	}
+
 	t := new(T)
 	err := json.Unmarshal([]byte(str), t)
 	if err != nil {
@@ -26,6 +30,10 @@ func ConvertJsonStringToBean[T any](str string) (*T, error) {
 }
 
 func MustConvertJsonStringToBean[T any](str string) *T {
+	if len(str) == 0 {
+		return nil
+	}
+
 	t := new(T)
 	_ = json.Unmarshal([]byte(str), t)
 	return t
@@ -36,6 +44,10 @@ func ConvertJsonStringToBeanList[T any](str string) ([]*T, error) {
 }
 
 func ConvertJsonStringToList[T any](str string) ([]T, error) {
+	if len(str) == 0 {
+		return []T{}, nil
+	}
+
 	var t []T
 	err := json.Unmarshal([]byte(str), &t)
 	if err != nil {
@@ -45,12 +57,20 @@ func ConvertJsonStringToList[T any](str string) ([]T, error) {
 }
 
 func MustConvertJsonStringToList[T any](str string) []T {
+	if len(str) == 0 {
+		return []T{}
+	}
+
 	var t []T
 	_ = json.Unmarshal([]byte(str), &t)
 	return t
 }
 
 func ConvertJsonBytesToBean[T any](bytes []byte) (*T, error) {
+	if len(bytes) == 0 {
+		return nil, nil
+	}
+
 	t := new(T)
 	err := json.Unmarshal(bytes, t)
 	if err != nil {
@@ -60,6 +80,10 @@ func ConvertJsonBytesToBean[T any](bytes []byte) (*T, error) {
 }
 
 func MustConvertJsonBytesToBean[T any](bytes []byte) *T {
+	if len(bytes) == 0 {
+		return nil
+	}
+
 	t := new(T)
 	_ = json.Unmarshal(bytes, t)
 	return t
@@ -70,6 +94,10 @@ func ConvertJsonBytesToBeanList[T any](bytes []byte) ([]*T, error) {
 }
 
 func ConvertJsonBytesToList[T any](bytes []byte) ([]T, error) {
+	if len(bytes) == 0 {
+		return []T{}, nil
+	}
+
 	var t []T
 	err := json.Unmarshal(bytes, &t)
 	if err != nil {

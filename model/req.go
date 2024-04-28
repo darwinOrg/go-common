@@ -1,7 +1,7 @@
 package model
 
 type IdReq struct {
-	Id int64 `json:"id" binding:"required,gte=1"`
+	Id int64 `json:"id" binding:"required,gt=0"`
 }
 
 type IdListReq struct {
@@ -13,5 +13,5 @@ type StringReq struct {
 }
 
 type StringListReq struct {
-	Values string `json:"values" binding:"required,gt=0"`
+	Values string `json:"values" binding:"required"`
 }

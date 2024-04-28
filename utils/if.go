@@ -7,3 +7,11 @@ func IfReturn[T any](condition bool, trueValue, falseValue T) T {
 
 	return falseValue
 }
+
+func IfConsume(condition bool, trueFn func(), falseFn func()) {
+	if condition {
+		trueFn()
+	}
+
+	falseFn()
+}

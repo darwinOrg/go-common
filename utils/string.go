@@ -2,7 +2,7 @@ package utils
 
 import "strings"
 
-func RepeatAndAddSeparator(s string, count int, separator string) string {
+func RepeatWithSeparator(s string, count int, separator string) string {
 	if count <= 1 {
 		return s
 	}

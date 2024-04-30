@@ -7,7 +7,7 @@ func RepeatWithSeparator(s string, count int, separator string) string {
 		return s
 	}
 
-	return strings.Repeat(s+separator, count) + s
+	return strings.Repeat(s+separator, count-1) + s
 }
 
 func CalcTextSimilarity(first, second string, percent *float64) int {

@@ -1,6 +1,8 @@
 package dgsys
 
-import "net"
+import (
+	"net"
+)
 
 func GetLocalLanIps() []string {
 	var ips []string

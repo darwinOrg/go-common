@@ -1,6 +1,7 @@
 package utils
 
 import (
+	cr "crypto/rand"
 	"errors"
 	"math/rand"
 )
@@ -27,7 +28,7 @@ func RandomString(s string, length int) (string, error) {
 	i := 0
 
 	for {
-		if _, err := rand.Read(r); err != nil {
+		if _, err := cr.Read(r); err != nil {
 			return "", err
 		}
 		for _, rb := range r {
@@ -55,7 +56,7 @@ func RandomLetter(length int) (string, error) {
 
 func RandomBytes(length int) ([]byte, error) {
 	b := make([]byte, length)
-	_, err := rand.Read(b)
+	_, err := cr.Read(b)
 	if err != nil {
 		return nil, err
 	}

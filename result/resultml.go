@@ -2,10 +2,10 @@ package result
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	dgerr "github.com/darwinOrg/go-common/enums/error"
 	dgsys "github.com/darwinOrg/go-common/sys"
-	"go/types"
 )
 
 type ResultML[T any] struct {
@@ -25,7 +25,7 @@ func (r *ResultML[T]) String() string {
 	}
 }
 
-var simpleSuccessML = &ResultML[types.Nil]{
+var simpleSuccessML = &ResultML[*Void]{
 	Success: true,
 	Code:    0,
 }
@@ -38,7 +38,7 @@ func SuccessML[T any](data T) *ResultML[T] {
 	}
 }
 
-func SimpleSuccessML() *ResultML[types.Nil] {
+func SimpleSuccessML() *ResultML[*Void] {
 	return simpleSuccessML
 }
 
@@ -56,8 +56,9 @@ func SimpleFailML[T any](messageCode string) *ResultML[T] {
 
 func FailByErrorML[T any](err error) *ResultML[T] {
 	fmt.Println("fail by err: ", err)
-	switch err.(type) {
-	case *dgerr.DgErrorML:
+	var dgErrorML *dgerr.DgErrorML
+	switch {
+	case errors.As(err, &dgErrorML):
 		return FailByDgErrorML[T](err.(*dgerr.DgErrorML))
 	default:
 		if dgsys.IsProd() {

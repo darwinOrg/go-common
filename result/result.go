@@ -2,6 +2,7 @@ package result
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	dgerr "github.com/darwinOrg/go-common/enums/error"
 	dgsys "github.com/darwinOrg/go-common/sys"
@@ -58,8 +59,9 @@ func SimpleFailByError(err error) *Result[*Void] {
 
 func FailByError[T any](err error) *Result[T] {
 	fmt.Println("fail by err: ", err)
-	switch err.(type) {
-	case *dgerr.DgError:
+	var dgError *dgerr.DgError
+	switch {
+	case errors.As(err, &dgError):
 		return FailByDgError[T](err.(*dgerr.DgError))
 	default:
 		if dgsys.IsProd() {

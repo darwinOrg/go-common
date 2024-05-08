@@ -1,6 +1,9 @@
 package utils
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+)
 
 func ConvertBeanToJsonString(obj any) (string, error) {
 	jsonBytes, err := json.Marshal(obj)
@@ -137,4 +140,26 @@ func ConvertToNewBeanListByJson[T any](obj any) ([]*T, error) {
 		return nil, err
 	}
 	return t, nil
+}
+
+func ConvertBeanToJsonStringWithoutEscaping(obj any) (string, error) {
+	var buf bytes.Buffer
+	encoder := json.NewEncoder(&buf)
+	encoder.SetEscapeHTML(false)
+
+	err := encoder.Encode(obj)
+	if err != nil {
+		return "", err
+	}
+
+	return buf.String(), nil
+}
+
+func MustConvertBeanToJsonStringWithoutEscaping(obj any) string {
+	str, err := ConvertBeanToJsonStringWithoutEscaping(obj)
+	if err != nil {
+		return ""
+	}
+
+	return str
 }

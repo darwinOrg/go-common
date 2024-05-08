@@ -1,6 +1,12 @@
 package utils
 
-import "strings"
+import (
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+var quoteRegexp = regexp.MustCompile(`(\\u[0-9a-fA-F]{4})`)
 
 func RepeatWithSeparator(s string, count int, separator string) string {
 	if count <= 1 {
@@ -8,6 +14,13 @@ func RepeatWithSeparator(s string, count int, separator string) string {
 	}
 
 	return strings.Repeat(s+separator, count-1) + s
+}
+
+func UnquoteText(text string) string {
+	return quoteRegexp.ReplaceAllStringFunc(text, func(match string) string {
+		unquotedText, _ := strconv.Unquote(`"` + match + `"`)
+		return unquotedText
+	})
 }
 
 func CalcTextSimilarity(first, second string, percent *float64) int {

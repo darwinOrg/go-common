@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -53,7 +54,7 @@ func WriteFileWithString(filename string, content string) error {
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
 	}(file)
 	if err != nil {
@@ -64,5 +65,29 @@ func WriteFileWithString(filename string, content string) error {
 		return err
 	}
 
+	return nil
+}
+
+func AppendToFile(filename string, data []byte) error {
+	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(file)
+
+	writer := bufio.NewWriter(file)
+	_, err = writer.Write(data)
+	if err != nil {
+		return err
+	}
+	err = writer.Flush()
+	if err != nil {
+		return err
+	}
 	return nil
 }

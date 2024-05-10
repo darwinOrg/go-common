@@ -24,6 +24,7 @@ type DgContext struct {
 	Product       int     `json:"product,omitempty"`
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
+	NotLogSQL     bool    `json:"-"`
 	safeExtra     sync.Map
 	unsafeExtra   map[string]any
 }

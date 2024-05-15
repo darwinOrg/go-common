@@ -101,7 +101,7 @@ func ToDgErrorML[T any](rt *ResultML[T]) *dgerr.DgErrorML {
 	return rt.ToDgErrorML()
 }
 
-func ExtractDataML[T *struct{}](rt *ResultML[T]) (T, *dgerr.DgErrorML) {
+func ExtractDataML[T *any](rt *ResultML[T]) (T, *dgerr.DgErrorML) {
 	err := ToDgErrorML(rt)
 	if err != nil {
 		return nil, err

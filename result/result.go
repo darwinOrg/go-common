@@ -104,7 +104,7 @@ func ToDgError[T any](rt *Result[T]) *dgerr.DgError {
 	return rt.ToDgError()
 }
 
-func ExtractData[T *struct{}](rt *Result[T]) (T, *dgerr.DgError) {
+func ExtractData[T *any](rt *Result[T]) (T, *dgerr.DgError) {
 	err := ToDgError(rt)
 	if err != nil {
 		return nil, err

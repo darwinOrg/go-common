@@ -24,6 +24,22 @@ func (r *Result[T]) String() string {
 	}
 }
 
+func (r *Result[T]) ToError() error {
+	if !r.Success {
+		return errors.New(r.Message)
+	}
+
+	return nil
+}
+
+func (r *Result[T]) ToDgError() *dgerr.DgError {
+	if !r.Success {
+		return dgerr.NewDgError(r.Code, r.Message)
+	}
+
+	return nil
+}
+
 var simpleSuccess = &Result[*Void]{
 	Success: true,
 	Code:    0,
@@ -78,4 +94,12 @@ func FailByDgError[T any](err *dgerr.DgError) *Result[T] {
 		Code:    err.Code,
 		Message: err.Message,
 	}
+}
+
+func ToDgError[T any](rt *Result[T]) *dgerr.DgError {
+	if rt == nil {
+		return dgerr.SYSTEM_ERROR
+	}
+
+	return rt.ToDgError()
 }

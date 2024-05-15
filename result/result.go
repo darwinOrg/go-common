@@ -104,11 +104,10 @@ func ToDgError[T any](rt *Result[T]) *dgerr.DgError {
 	return rt.ToDgError()
 }
 
-func ExtractData[T *any](rt *Result[T]) (T, *dgerr.DgError) {
-	err := ToDgError(rt)
-	if err != nil {
-		return nil, err
+func ExtractData[T any](rt *Result[T]) (T, *dgerr.DgError) {
+	if rt == nil {
+		return *new(T), dgerr.SYSTEM_ERROR
 	}
 
-	return rt.Data, nil
+	return rt.Data, rt.ToDgError()
 }

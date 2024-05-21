@@ -96,18 +96,18 @@ func FailByDgError[T any](err *dgerr.DgError) *Result[T] {
 	}
 }
 
-func ToDgError[T any](rt *Result[T]) *dgerr.DgError {
+func ToError[T any](rt *Result[T]) error {
 	if rt == nil {
 		return dgerr.SYSTEM_ERROR
 	}
 
-	return rt.ToDgError()
+	return rt.ToError()
 }
 
-func ExtractData[T any](rt *Result[T]) (T, *dgerr.DgError) {
+func ExtractData[T any](rt *Result[T]) (T, error) {
 	if rt == nil {
 		return *new(T), dgerr.SYSTEM_ERROR
 	}
 
-	return rt.Data, rt.ToDgError()
+	return rt.Data, rt.ToError()
 }

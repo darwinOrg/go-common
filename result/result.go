@@ -26,14 +26,6 @@ func (r *Result[T]) String() string {
 
 func (r *Result[T]) ToError() error {
 	if !r.Success {
-		return errors.New(r.Message)
-	}
-
-	return nil
-}
-
-func (r *Result[T]) ToDgError() *dgerr.DgError {
-	if !r.Success {
 		return dgerr.NewDgError(r.Code, r.Message)
 	}
 

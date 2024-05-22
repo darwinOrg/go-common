@@ -27,14 +27,6 @@ func (r *ResultML[T]) String() string {
 
 func (r *ResultML[T]) ToError() error {
 	if !r.Success {
-		return errors.New(r.Message)
-	}
-
-	return nil
-}
-
-func (r *ResultML[T]) ToDgErrorML() *dgerr.DgErrorML {
-	if !r.Success {
 		return dgerr.NewDgErrorML(r.Code, r.MessageCode)
 	}
 
@@ -93,18 +85,18 @@ func FailByDgErrorML[T any](err *dgerr.DgErrorML) *ResultML[T] {
 	}
 }
 
-func ToDgErrorML[T any](rt *ResultML[T]) *dgerr.DgErrorML {
+func ToDgErrorML[T any](rt *ResultML[T]) error {
 	if rt == nil {
 		return dgerr.SYSTEM_ERROR_ML
 	}
 
-	return rt.ToDgErrorML()
+	return rt.ToError()
 }
 
-func ExtractDataML[T any](rt *ResultML[T]) (T, *dgerr.DgErrorML) {
+func ExtractDataML[T any](rt *ResultML[T]) (T, error) {
 	if rt == nil {
 		return *new(T), dgerr.SYSTEM_ERROR_ML
 	}
 
-	return rt.Data, rt.ToDgErrorML()
+	return rt.Data, rt.ToError()
 }

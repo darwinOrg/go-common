@@ -39,13 +39,9 @@ func LocalLanIpToUint32() (uint32, error) {
 		return 0, errors.New("invalid IP address")
 	}
 
-	// 检查是否是IPv4
-	if ip.To4() == nil {
+	if ip4 := ip.To4(); ip4 != nil {
+		return binary.BigEndian.Uint32(ip4), nil
+	} else {
 		return 0, errors.New("not an IPv4 address")
 	}
-
-	var ipInt uint32
-	buf := ip.To4()
-	binary.BigEndian.PutUint32(buf, ipInt)
-	return ipInt, nil
 }

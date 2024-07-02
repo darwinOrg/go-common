@@ -362,3 +362,17 @@ func Remove[T comparable](slice []T, elements []T) []T {
 		return !Contains(elements, t)
 	})
 }
+
+func Partition[T any](s []T, n int) [][]T {
+	var rt [][]T
+
+	for i := 0; i < len(s); i += n {
+		end := i + n
+		if end > len(s) {
+			end = len(s)
+		}
+		rt = append(rt, s[i:end])
+	}
+
+	return rt
+}

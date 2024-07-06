@@ -6,6 +6,10 @@ type DgError struct {
 }
 
 func (e *DgError) Error() string {
+	if e == nil {
+		return ""
+	}
+
 	return e.Message
 }
 

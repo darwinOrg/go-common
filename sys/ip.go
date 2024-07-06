@@ -1,6 +1,8 @@
 package dgsys
 
 import (
+	"encoding/binary"
+	"errors"
 	"net"
 )
 
@@ -24,4 +26,22 @@ func GetLocalLanIps() []string {
 	}
 
 	return ips
+}
+
+func LocalLanIpToUint32() (uint32, error) {
+	ips := GetLocalLanIps()
+	if len(ips) == 0 {
+		return 0, errors.New("no local LAN IP address found")
+	}
+
+	ip := net.ParseIP(ips[0])
+	if ip == nil {
+		return 0, errors.New("invalid IP address")
+	}
+
+	if ip4 := ip.To4(); ip4 != nil {
+		return binary.BigEndian.Uint32(ip4), nil
+	} else {
+		return 0, errors.New("not an IPv4 address")
+	}
 }

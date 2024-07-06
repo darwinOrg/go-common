@@ -25,6 +25,14 @@ func (r *ResultML[T]) String() string {
 	}
 }
 
+func (r *ResultML[T]) ToError() error {
+	if !r.Success {
+		return dgerr.NewDgErrorML(r.Code, r.MessageCode)
+	}
+
+	return nil
+}
+
 var simpleSuccessML = &ResultML[*Void]{
 	Success: true,
 	Code:    0,
@@ -75,4 +83,20 @@ func FailByDgErrorML[T any](err *dgerr.DgErrorML) *ResultML[T] {
 		Code:        err.Code,
 		MessageCode: err.MessageCode,
 	}
+}
+
+func ToDgErrorML[T any](rt *ResultML[T]) error {
+	if rt == nil {
+		return dgerr.SYSTEM_ERROR_ML
+	}
+
+	return rt.ToError()
+}
+
+func ExtractDataML[T any](rt *ResultML[T]) (T, error) {
+	if rt == nil {
+		return *new(T), dgerr.SYSTEM_ERROR_ML
+	}
+
+	return rt.Data, rt.ToError()
 }

@@ -33,7 +33,7 @@ func ExistsDir(dir string) bool {
 func ExistsFile(filename string) bool {
 	_, err := os.Stat(filename)
 
-	return err == nil
+	return os.IsExist(err)
 }
 
 func GetFileSize(filename string) int64 {

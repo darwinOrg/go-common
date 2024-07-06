@@ -24,6 +24,14 @@ func (r *Result[T]) String() string {
 	}
 }
 
+func (r *Result[T]) ToError() error {
+	if !r.Success {
+		return dgerr.NewDgError(r.Code, r.Message)
+	}
+
+	return nil
+}
+
 var simpleSuccess = &Result[*Void]{
 	Success: true,
 	Code:    0,
@@ -78,4 +86,20 @@ func FailByDgError[T any](err *dgerr.DgError) *Result[T] {
 		Code:    err.Code,
 		Message: err.Message,
 	}
+}
+
+func ToError[T any](rt *Result[T]) error {
+	if rt == nil {
+		return dgerr.SYSTEM_ERROR
+	}
+
+	return rt.ToError()
+}
+
+func ExtractData[T any](rt *Result[T]) (T, error) {
+	if rt == nil {
+		return *new(T), dgerr.SYSTEM_ERROR
+	}
+
+	return rt.Data, rt.ToError()
 }

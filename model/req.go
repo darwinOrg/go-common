@@ -1,17 +1,9 @@
 package model
 
 type IdReq struct {
-	Id int64 `json:"id" binding:"required,gt=0"`
+	Id int64 `json:"id" form:"id" binding:"required,gt=0" remark:"id"`
 }
 
 type IdListReq struct {
-	IdList []int64 `json:"idList" binding:"required,gt=0"`
-}
-
-type StringReq struct {
-	Value string `json:"value" binding:"required"`
-}
-
-type StringListReq struct {
-	Values string `json:"values" binding:"required"`
+	IdList []int64 `json:"idList" form:"idList" binding:"required,gt=0" remark:"id列表"`
 }

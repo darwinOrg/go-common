@@ -41,3 +41,20 @@ func Trans2NewSetMap[T comparable, K any, V comparable](mp map[T][]K, mapFunc Fu
 
 	return newMap
 }
+
+func MapToSliceByKeysAndFilterEmpty[T comparable, V any](mp map[T]*V, keys []T) []*V {
+	if len(mp) == 0 {
+		return []*V{}
+	}
+
+	vs := MapToList(keys, func(t T) *V {
+		return mp[t]
+	})
+	if len(vs) == 0 {
+		return []*V{}
+	}
+
+	return FilterList(vs, func(v *V) bool {
+		return v != nil
+	})
+}

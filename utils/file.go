@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -89,5 +90,41 @@ func AppendToFile(filename string, data []byte) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func CopyFile(srcFile, dstFile string) error {
+	src, err := os.Open(srcFile)
+	if err != nil {
+		return err
+	}
+	defer func(src *os.File) {
+		_ = src.Close()
+	}(src)
+
+	dst, err := os.Create(dstFile)
+	if err != nil {
+		return err
+	}
+	defer func(dst *os.File) {
+		_ = dst.Close()
+	}(dst)
+
+	buf := make([]byte, 1024)
+	for {
+		n, err := src.Read(buf)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		_, err = dst.Write(buf[:n])
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }

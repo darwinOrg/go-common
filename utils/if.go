@@ -15,3 +15,11 @@ func IfConsume(condition bool, trueFn func(), falseFn func()) {
 
 	falseFn()
 }
+
+func IfConsumeReturn[T any](condition bool, trueFn func() T, falseFn func() T) T {
+	if condition {
+		return trueFn()
+	}
+
+	return falseFn()
+}

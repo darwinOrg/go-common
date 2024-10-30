@@ -19,6 +19,11 @@ func MustConvertBeanToJsonString(obj any) string {
 	return string(jsonBytes)
 }
 
+func MustConvertBeanToJsonStringPretty(obj any) string {
+	jsonBytes, _ := json.MarshalIndent(obj, "", "	")
+	return string(jsonBytes)
+}
+
 func ConvertJsonStringToBean[T any](str string) (*T, error) {
 	if len(str) == 0 {
 		return nil, nil

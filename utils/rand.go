@@ -8,7 +8,7 @@ import (
 
 const (
 	symbol = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]`~"
-	letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 )
 
 func RandomIntInRange(min, max int) int {

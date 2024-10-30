@@ -29,6 +29,11 @@ type DgContext struct {
 	unsafeExtra   map[string]any
 }
 
+func SimpleDgContext() *DgContext {
+	traceId, _ := utils.RandomLetter(64)
+	return &DgContext{TraceId: traceId}
+}
+
 func (ctx *DgContext) SetExtraKeyValue(key string, val any) {
 	ctx.safeExtra.Store(key, val)
 }

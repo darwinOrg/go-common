@@ -208,10 +208,18 @@ func SortAsc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint3
 	})
 }
 
+func SimpleSortAsc[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | string](slice []T) {
+	SortAsc(slice, Identity[T])
+}
+
 func SortDesc[T any, V int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | string](slice []T, mapFunc Function[T, V]) {
 	Sort(slice, func(t1, t2 T) bool {
 		return mapFunc(t1) > mapFunc(t2)
 	})
+}
+
+func SimpleSortDesc[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | string](slice []T) {
+	SortDesc(slice, Identity[T])
 }
 
 func SortByIds[T any, V comparable](slice []T, ids []V, mapFunc Function[T, V]) []T {

@@ -17,22 +17,19 @@ func ExecCommand(command string, args ...string) (string, error) {
 
 	if err != nil {
 		if cmd.ProcessState != nil && cmd.ProcessState.ExitCode() == 200 {
-			log.Printf("Execute command %s ok, cost %dms", command, cost)
+			log.Printf("Execute command %s with args %v ok, cost %dms", command, args, cost)
 			return string(output), nil
 		}
 
-		log.Printf("Execute command %s error: %v\noutput: %s", command, err, string(output))
+		log.Printf("Execute command %s with args %v error: %v\noutput: %s", command, args, err, string(output))
 		return "", err
 	}
 
-	log.Printf("Execute command %s success, cost %dms", command, cost)
+	log.Printf("Execute command %s with args %v success, cost %dms", command, args, cost)
 	return string(output), nil
 }
 
-func ExecCommandWithTimeout(command string, timeout time.Duration, args ...string) (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-
+func ExecCommandContext(ctx context.Context, command string, args ...string) (string, error) {
 	start := time.Now()
 	cmd := exec.CommandContext(ctx, command, args...)
 
@@ -41,7 +38,7 @@ func ExecCommandWithTimeout(command string, timeout time.Duration, args ...strin
 
 	if err != nil {
 		if errors.Is(ctx.Err(), context.DeadlineExceeded) {
-			log.Printf("Execute command %s timeout, cost %dms", command, cost)
+			log.Printf("Execute command %s with args %v timeout, cost %dms", command, args, cost)
 			return string(output), context.DeadlineExceeded
 		}
 
@@ -51,14 +48,14 @@ func ExecCommandWithTimeout(command string, timeout time.Duration, args ...strin
 		}
 
 		if exitCode == 200 {
-			log.Printf("Execute command %s ok, cost %dms", command, cost)
+			log.Printf("Execute command %s with args %v ok, cost %dms", command, args, cost)
 			return string(output), nil
 		}
 
-		log.Printf("Execute command %s error: %v\noutput: %s", command, err, string(output))
+		log.Printf("Execute command %s with args %v error: %v\noutput: %s", command, args, err, string(output))
 		return "", err
 	}
 
-	log.Printf("Execute command %s success, cost %dms", command, cost)
+	log.Printf("Execute command %s with args %v success, cost %dms", command, args, cost)
 	return string(output), nil
 }

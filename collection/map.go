@@ -58,3 +58,20 @@ func MapToSliceByKeysAndFilterEmpty[T comparable, V any](mp map[T]*V, keys []T) 
 		return v != nil
 	})
 }
+
+func ExtractMapValues[K comparable, V any](mp map[K]V) []V {
+	if len(mp) == 0 {
+		return []V{}
+	}
+
+	var values []V
+	for _, v := range mp {
+		values = append(values, v)
+	}
+
+	return values
+}
+
+func ExtractMapValueSet[K comparable, V comparable](mp map[K]V) []V {
+	return DeDupToSet(ExtractMapValues(mp))
+}

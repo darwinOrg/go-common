@@ -30,7 +30,7 @@ type DgContext struct {
 }
 
 func SimpleDgContext() *DgContext {
-	traceId, _ := utils.RandomLetter(64)
+	traceId, _ := utils.RandomLetter(32)
 	return &DgContext{TraceId: traceId}
 }
 

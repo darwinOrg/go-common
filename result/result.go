@@ -72,7 +72,7 @@ func FailByError[T any](err error) *Result[T] {
 	case errors.As(err, &dgError):
 		return FailByDgError[T](err.(*dgerr.DgError))
 	default:
-		if dgsys.IsProd() {
+		if dgsys.IsProd() || dgsys.IsPre() {
 			return FailByDgError[T](dgerr.SYSTEM_ERROR)
 		} else {
 			return SimpleFail[T](err.Error())

@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
@@ -51,6 +52,22 @@ func GetFileSize(filename string) (int64, error) {
 	}
 
 	return fileInfo.Size(), nil
+}
+
+func MustReadFileString(filename string) string {
+	content, _ := ReadFileString(filename)
+
+	return content
+}
+
+func ReadFileString(filename string) (string, error) {
+	fileBytes, err := os.ReadFile(filename)
+	if err != nil {
+		log.Printf("Error reading file: %v", err)
+		return "", err
+	}
+
+	return string(fileBytes), nil
 }
 
 func WriteFileWithString(filename string, content string) error {
@@ -167,4 +184,21 @@ func CalcFileMd5(filename string) (string, error) {
 	md5sum := hex.EncodeToString(hash.Sum(nil))
 	log.Printf("MD5 checksum of the file(%s) is: %s", filename, md5sum)
 	return md5sum, nil
+}
+
+func ListFiles(dir string) ([]string, error) {
+	var files []string
+	err := filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// 如果是文件，则打印其路径
+		if !d.IsDir() {
+			files = append(files, path)
+		}
+
+		return nil
+	})
+	return files, err
 }

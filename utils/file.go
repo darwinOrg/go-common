@@ -265,7 +265,7 @@ func RenameSubFilesBlankSpaceWithUnderline(dir string) error {
 			return err
 		}
 
-		if d.IsDir() && strings.Contains(path, " ") {
+		if !d.IsDir() && strings.Contains(path, " ") {
 			re := os.Rename(path, strings.ReplaceAll(path, " ", "_"))
 			if re != nil {
 				return re

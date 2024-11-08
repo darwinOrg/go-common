@@ -202,3 +202,76 @@ func ListFiles(dir string) ([]string, error) {
 	})
 	return files, err
 }
+
+func GetDirectSubdirectories(dir string) ([]string, error) {
+	var subdirectories []string
+
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			subdirectory := filepath.Join(dir, file.Name())
+			subdirectories = append(subdirectories, subdirectory)
+		}
+	}
+
+	return subdirectories, nil
+}
+
+func RenameSubdirectoriesBlankSpaceWithUnderline(dir string) error {
+	subdirectories, err := GetDirectSubdirectories(dir)
+	if err != nil {
+		return err
+	}
+	if len(subdirectories) == 0 {
+		return nil
+	}
+
+	var newSubdirectories []string
+	for _, subdirectory := range subdirectories {
+		if strings.Contains(subdirectory, " ") {
+			newSubdirectory := strings.ReplaceAll(subdirectory, " ", "_")
+			re := os.Rename(subdirectory, newSubdirectory)
+			if re != nil {
+				return re
+			}
+			newSubdirectories = append(newSubdirectories, newSubdirectory)
+		} else {
+			newSubdirectories = append(newSubdirectories, subdirectory)
+		}
+	}
+
+	for _, subdirectory := range newSubdirectories {
+		err = RenameSubdirectoriesBlankSpaceWithUnderline(subdirectory)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func RenameSubFilesBlankSpaceWithUnderline(dir string) error {
+	err := RenameSubdirectoriesBlankSpaceWithUnderline(dir)
+	if err != nil {
+		return err
+	}
+
+	return filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if d.IsDir() && strings.Contains(path, " ") {
+			re := os.Rename(path, strings.ReplaceAll(path, " ", "_"))
+			if re != nil {
+				return re
+			}
+		}
+
+		return nil
+	})
+}

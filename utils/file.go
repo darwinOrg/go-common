@@ -121,6 +121,35 @@ func AppendToFile(filename string, data []byte) error {
 	return nil
 }
 
+func CopyDir(srcDir, dstDir string) error {
+	err := os.MkdirAll(dstDir, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	entries, err := os.ReadDir(srcDir)
+	if err != nil {
+		return err
+	}
+
+	for _, entry := range entries {
+		sourcePath := filepath.Join(srcDir, entry.Name())
+		destPath := filepath.Join(dstDir, entry.Name())
+
+		if entry.IsDir() {
+			err = CopyDir(sourcePath, destPath)
+		} else {
+			err = CopyFile(sourcePath, destPath)
+		}
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func CopyFile(srcFile, dstFile string) error {
 	src, err := os.Open(srcFile)
 	if err != nil {
@@ -203,7 +232,7 @@ func ListFiles(dir string) ([]string, error) {
 	return files, err
 }
 
-func GetDirectSubdirectories(dir string) ([]string, error) {
+func ListDirectSubdirectories(dir string) ([]string, error) {
 	var subdirectories []string
 
 	files, err := os.ReadDir(dir)
@@ -221,8 +250,25 @@ func GetDirectSubdirectories(dir string) ([]string, error) {
 	return subdirectories, nil
 }
 
+func ListDirectFiles(dir string) ([]string, error) {
+	var directFiles []string
+
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, file := range files {
+		if !file.IsDir() {
+			directFiles = append(directFiles, filepath.Join(dir, file.Name()))
+		}
+	}
+
+	return directFiles, nil
+}
+
 func RenameSubdirectoriesBlankSpaceWithUnderline(dir string) error {
-	subdirectories, err := GetDirectSubdirectories(dir)
+	subdirectories, err := ListDirectSubdirectories(dir)
 	if err != nil {
 		return err
 	}

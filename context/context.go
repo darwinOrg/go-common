@@ -53,6 +53,14 @@ func WithCancel(parent context.Context) (*DgContext, context.CancelFunc) {
 	return ctx, cancel
 }
 
+func WithValue(parent context.Context, key, val any) *DgContext {
+	ctxWV := context.WithValue(parent, key, val)
+	ctx := SimpleDgContext()
+	ctx.inner = ctxWV
+
+	return ctx
+}
+
 func (ctx *DgContext) WithTimeout(parent context.Context, timeout time.Duration) context.CancelFunc {
 	ctxWT, cancel := context.WithTimeout(parent, timeout)
 	ctx.inner = ctxWT
@@ -65,6 +73,11 @@ func (ctx *DgContext) WithCancel(parent context.Context) context.CancelFunc {
 	ctx.inner = ctxWT
 
 	return cancel
+}
+
+func (ctx *DgContext) WithValue(parent context.Context, key, val any) {
+	ctxWV := context.WithValue(parent, key, val)
+	ctx.inner = ctxWV
 }
 
 func (ctx *DgContext) Deadline() (deadline time.Time, ok bool) {

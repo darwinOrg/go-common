@@ -1,8 +1,10 @@
 package dgctx
 
 import (
+	"context"
 	"github.com/darwinOrg/go-common/utils"
 	"sync"
+	"time"
 )
 
 type DgContext struct {
@@ -25,6 +27,7 @@ type DgContext struct {
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	NotLogSQL     bool    `json:"-"`
+	inner         context.Context
 	safeExtra     sync.Map
 	unsafeExtra   map[string]any
 }
@@ -32,6 +35,52 @@ type DgContext struct {
 func SimpleDgContext() *DgContext {
 	traceId, _ := utils.RandomLetter(32)
 	return &DgContext{TraceId: traceId}
+}
+
+func WithTimeout(parent context.Context, timeout time.Duration) (*DgContext, context.CancelFunc) {
+	ctxWT, cancel := context.WithTimeout(parent, timeout)
+	ctx := SimpleDgContext()
+	ctx.inner = ctxWT
+
+	return ctx, cancel
+}
+
+func WithCancel(parent context.Context) (*DgContext, context.CancelFunc) {
+	ctxWT, cancel := context.WithCancel(parent)
+	ctx := SimpleDgContext()
+	ctx.inner = ctxWT
+
+	return ctx, cancel
+}
+
+func (ctx *DgContext) WithTimeout(parent context.Context, timeout time.Duration) context.CancelFunc {
+	ctxWT, cancel := context.WithTimeout(parent, timeout)
+	ctx.inner = ctxWT
+
+	return cancel
+}
+
+func (ctx *DgContext) WithCancel(parent context.Context) context.CancelFunc {
+	ctxWT, cancel := context.WithCancel(parent)
+	ctx.inner = ctxWT
+
+	return cancel
+}
+
+func (ctx *DgContext) Deadline() (deadline time.Time, ok bool) {
+	return ctx.inner.Deadline()
+}
+
+func (ctx *DgContext) Done() <-chan struct{} {
+	return ctx.inner.Done()
+}
+
+func (ctx *DgContext) Err() error {
+	return ctx.inner.Err()
+}
+
+func (ctx *DgContext) Value(key any) any {
+	return ctx.inner.Value(key)
 }
 
 func (ctx *DgContext) SetExtraKeyValue(key string, val any) {

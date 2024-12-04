@@ -80,20 +80,8 @@ func (ctx *DgContext) WithValue(parent context.Context, key, val any) {
 	ctx.inner = ctxWV
 }
 
-func (ctx *DgContext) Deadline() (deadline time.Time, ok bool) {
-	return ctx.inner.Deadline()
-}
-
-func (ctx *DgContext) Done() <-chan struct{} {
-	return ctx.inner.Done()
-}
-
-func (ctx *DgContext) Err() error {
-	return ctx.inner.Err()
-}
-
-func (ctx *DgContext) Value(key any) any {
-	return ctx.inner.Value(key)
+func (ctx *DgContext) InnerContext() context.Context {
+	return ctx.inner
 }
 
 func (ctx *DgContext) SetExtraKeyValue(key string, val any) {

@@ -3,6 +3,7 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 func ConvertBeanToJsonString(obj any) (string, error) {
@@ -167,4 +168,29 @@ func MustConvertBeanToJsonStringWithoutEscaping(obj any) string {
 	}
 
 	return str
+}
+
+func MergeJsonStrings(jsonStrings ...string) (string, error) {
+	var mergedMap map[string]any
+
+	for _, jsonString := range jsonStrings {
+		var currentMap map[string]any
+		if err := json.Unmarshal([]byte(jsonString), &currentMap); err != nil {
+			fmt.Printf("error unmarshalling JSON string: %v", err)
+			continue
+		}
+
+		if mergedMap == nil {
+			mergedMap = currentMap
+		} else {
+			mergedMap = MergeMaps(mergedMap, currentMap)
+		}
+	}
+
+	mergedJSON, err := json.Marshal(mergedMap)
+	if err != nil {
+		return "", fmt.Errorf("error marshalling merged map to JSON: %v", err)
+	}
+
+	return string(mergedJSON), nil
 }

@@ -4,6 +4,8 @@ import (
 	"encoding/binary"
 	"errors"
 	"net"
+	"os"
+	"strings"
 )
 
 func GetLocalLanIps() []string {
@@ -44,4 +46,17 @@ func LocalLanIpToUint32() (uint32, error) {
 	} else {
 		return 0, errors.New("not an IPv4 address")
 	}
+}
+
+func GetHostName() string {
+	host, err := os.Hostname()
+	if err != nil {
+		return "UNKNOWN"
+	}
+
+	if strings.TrimSpace(host) != "" {
+		return host
+	}
+
+	return "UNKNOWN"
 }

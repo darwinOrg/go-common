@@ -27,6 +27,7 @@ type DgContext struct {
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	NotLogSQL     bool    `json:"-"`
+	superRight    bool
 	inner         context.Context
 	safeExtra     sync.Map
 	unsafeExtra   map[string]any
@@ -109,8 +110,17 @@ func (ctx *DgContext) GetUnsafeExtraValue(key string) any {
 	return ctx.unsafeExtra[key]
 }
 
+func (ctx *DgContext) SetSuperRight(superRight bool) {
+	ctx.superRight = superRight
+}
+
+func (ctx *DgContext) HasSuperRight() bool {
+	return ctx.superRight
+}
+
 func (ctx *DgContext) Clone() *DgContext {
 	clone := utils.MustConvertToNewBeanByJson[DgContext](ctx)
+	clone.superRight = ctx.superRight
 	clone.unsafeExtra = ctx.unsafeExtra
 	ctx.safeExtra.Range(func(key, val any) bool {
 		clone.safeExtra.Store(key, val)

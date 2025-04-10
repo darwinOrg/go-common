@@ -117,11 +117,7 @@ func Extract2KeyListMap[T any, K comparable, V any](slice []T, keyFunc Function[
 	for _, t := range slice {
 		k := keyFunc(t)
 		v := valueFunc(t)
-		if _, ok := mp[k]; ok {
-			mp[k] = append(mp[k], v)
-		} else {
-			mp[k] = []V{v}
-		}
+		mp[k] = append(mp[k], v)
 	}
 
 	return mp

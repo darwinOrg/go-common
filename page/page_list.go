@@ -3,12 +3,12 @@ package page
 import "encoding/json"
 
 type PageList[T any] struct {
-	PageNo     int            `json:"pageNo"`
-	PageSize   int            `json:"pageSize"`
-	TotalCount int            `json:"totalCount"`
-	TotalPages int            `json:"totalPages"`
-	List       []*T           `json:"list"`
-	Extra      map[string]any `json:"extra,omitempty"`
+	PageNo     int  `json:"pageNo"`
+	PageSize   int  `json:"pageSize"`
+	TotalCount int  `json:"totalCount"`
+	TotalPages int  `json:"totalPages"`
+	List       []*T `json:"list"`
+	Extra      any  `json:"extra,omitempty"`
 }
 
 func (p *PageList[T]) String() string {
@@ -18,22 +18,6 @@ func (p *PageList[T]) String() string {
 	} else {
 		return string(j)
 	}
-}
-
-func (p *PageList[T]) SetExtraKeyValue(key string, val any) {
-	if p.Extra == nil {
-		p.Extra = make(map[string]any)
-	}
-
-	p.Extra[key] = val
-}
-
-func (p *PageList[T]) GetExtraValue(key string) any {
-	if p.Extra == nil {
-		return nil
-	}
-
-	return p.Extra[key]
 }
 
 func BuildPageList[T any](pp *PageParam, totalCount int, list []*T) *PageList[T] {

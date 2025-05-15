@@ -6,7 +6,10 @@ import (
 	"strings"
 )
 
-var quoteRegexp = regexp.MustCompile(`(\\u[0-9a-fA-F]{4})`)
+var (
+	quoteRegexp  = regexp.MustCompile(`(\\u[0-9a-fA-F]{4})`)
+	numberRegexp = regexp.MustCompile(`^[+-]?(\d*\.)?\d+$`)
+)
 
 func RepeatWithSeparator(s string, count int, separator string) string {
 	if count <= 1 {
@@ -65,4 +68,8 @@ func CalcTextSimilarity(first, second string, percent *float64) int {
 		*percent = float64(sim*200) / float64(l1+l2)
 	}
 	return sim
+}
+
+func IsNumber(s string) bool {
+	return numberRegexp.MatchString(s)
 }

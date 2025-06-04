@@ -3,12 +3,12 @@ package page
 import "encoding/json"
 
 type PageList[T any] struct {
-	PageNo     int  `json:"pageNo"`
-	PageSize   int  `json:"pageSize"`
-	TotalCount int  `json:"totalCount"`
-	TotalPages int  `json:"totalPages"`
-	List       []*T `json:"list"`
-	Extra      any  `json:"extra,omitempty"`
+	PageNo     int  `json:"pageNo" binding:"required" remark:"页码"`
+	PageSize   int  `json:"pageSize" binding:"required" remark:"每页记录数"`
+	TotalCount int  `json:"totalCount" remark:"总记录数"`
+	TotalPages int  `json:"totalPages" remark:"总页数"`
+	List       []*T `json:"list" remark:"列表记录"`
+	Extra      any  `json:"extra,omitempty" remark:"额外数据"`
 }
 
 func (p *PageList[T]) String() string {

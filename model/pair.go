@@ -5,23 +5,23 @@ import (
 )
 
 type IntCodeNamePair struct {
-	Code int    `json:"code"`
-	Name string `json:"name"`
+	Code int    `json:"code" remark:"编码"`
+	Name string `json:"name" remark:"名称"`
 }
 
 type IdNamePair struct {
-	Id   int64  `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
+	Id   int64  `json:"id,omitempty" remark:"id"`
+	Name string `json:"name,omitempty" remark:"名称"`
 }
 
 type StringCodeNamePair struct {
-	Code string `json:"code"`
-	Name string `json:"name"`
+	Code string `json:"code" remark:"编码"`
+	Name string `json:"name" remark:"名称"`
 }
 
 type KeyValuePair[K any, V any] struct {
-	Key   K `json:"key"`
-	Value V `json:"value"`
+	Key   K `json:"key" remark:"键"`
+	Value V `json:"value" remark:"值"`
 }
 
 func (pair *IdNamePair) String() string {

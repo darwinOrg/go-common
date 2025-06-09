@@ -67,7 +67,7 @@ func ReflectAllFieldValuePointers(obj any) []any {
 	val := reflect.ValueOf(obj).Elem()
 	var ptrs []any
 	for i := 0; i < val.NumField(); i++ {
-		fieldPtr := val.Field(i).Addr().Pointer()
+		fieldPtr := val.Field(i).Addr().Interface()
 		ptrs = append(ptrs, fieldPtr)
 	}
 

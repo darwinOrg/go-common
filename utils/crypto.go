@@ -9,7 +9,9 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/hex"
+	"io"
 	"math/big"
+	"os"
 )
 
 func Sha1Base64Encode(key string, content string) string {
@@ -45,10 +47,31 @@ func Sha256Hex(key string, content string) string {
 }
 
 func Md5Hex(content string) string {
+	return Md5HexBytes([]byte(content))
+}
+
+func Md5HexBytes(bytes []byte) string {
 	h := md5.New()
-	h.Write([]byte(content))
+	h.Write(bytes)
 
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+func Md5HexFile(filePath string) (string, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", err
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	hash := md5.New()
+	if _, err = io.Copy(hash, file); err != nil {
+		return "", err
+	}
+
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
 // GenerateCryptoRandomString generates a random string for cryptographic usage.

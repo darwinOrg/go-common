@@ -98,6 +98,29 @@ func MustConvertJsonBytesToBean[T any](bytes []byte) *T {
 	return t
 }
 
+func ConvertJsonStringToMap(str string) (map[string]any, error) {
+	return ConvertJsonBytesToMap([]byte(str))
+}
+
+func MustConvertJsonStringToMap(str string) map[string]any {
+	mp, _ := ConvertJsonStringToMap(str)
+	return mp
+}
+
+func ConvertJsonBytesToMap(bytes []byte) (map[string]any, error) {
+	var mp map[string]any
+	err := json.Unmarshal(bytes, &mp)
+	if err != nil {
+		return nil, err
+	}
+	return mp, nil
+}
+
+func MustConvertJsonBytesToMap(bytes []byte) map[string]any {
+	mp, _ := ConvertJsonBytesToMap(bytes)
+	return mp
+}
+
 func ConvertJsonBytesToBeanList[T any](bytes []byte) ([]*T, error) {
 	return ConvertJsonBytesToList[*T](bytes)
 }

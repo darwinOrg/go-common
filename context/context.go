@@ -26,6 +26,7 @@ type DgContext struct {
 	Product       int     `json:"product,omitempty"`
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
+	NotPrintLog   bool    `json:"-"`
 	NotLogSQL     bool    `json:"-"`
 	superRight    bool
 	inner         context.Context

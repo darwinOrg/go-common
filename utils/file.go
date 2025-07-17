@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -320,4 +321,13 @@ func RenameSubFilesBlankSpaceWithUnderline(dir string) error {
 
 		return nil
 	})
+}
+
+func GetFileBaseWithoutExt(filename string) string {
+	fileBase := path.Base(filename)
+	return fileBase[:strings.Index(fileBase, ".")]
+}
+
+func ReplaceFileExt(filename, toExt string) string {
+	return filename[:strings.Index(filename, ".")] + toExt
 }

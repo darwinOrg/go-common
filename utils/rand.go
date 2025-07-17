@@ -15,6 +15,11 @@ func RandomIntInRange(min, max int) int {
 	return min + rand.Intn(max-min)
 }
 
+func MustRandomString(s string, length int) string {
+	rs, _ := RandomString(s, length)
+	return rs
+}
+
 func RandomString(s string, length int) (string, error) {
 	var chars = []byte(s)
 	clen := len(chars)
@@ -46,12 +51,27 @@ func RandomString(s string, length int) (string, error) {
 	}
 }
 
+func MustRandomSymbol(length int) string {
+	rs, _ := RandomSymbol(length)
+	return rs
+}
+
 func RandomSymbol(length int) (string, error) {
 	return RandomString(symbol, length)
 }
 
+func MustRandomLetter(length int) string {
+	rs, _ := RandomLetter(length)
+	return rs
+}
+
 func RandomLetter(length int) (string, error) {
 	return RandomString(letter, length)
+}
+
+func MustRandomBytes(length int) []byte {
+	rb, _ := RandomBytes(length)
+	return rb
 }
 
 func RandomBytes(length int) ([]byte, error) {

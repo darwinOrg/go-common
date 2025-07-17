@@ -13,11 +13,11 @@ func ExecCommand(command string, args ...string) (string, error) {
 	cmd := exec.Command(command, args...)
 
 	output, err := cmd.CombinedOutput()
-	cost := time.Since(start).Milliseconds()
+	cost := time.Since(start)
 
 	if err != nil {
 		if cmd.ProcessState != nil && cmd.ProcessState.ExitCode() == 200 {
-			log.Printf("Execute command %s with args %v ok, cost %dms", command, args, cost)
+			log.Printf("Execute command %s with args %v ok, cost %v", command, args, cost)
 			return string(output), nil
 		}
 
@@ -25,7 +25,7 @@ func ExecCommand(command string, args ...string) (string, error) {
 		return "", err
 	}
 
-	log.Printf("Execute command %s with args %v success, cost %dms", command, args, cost)
+	log.Printf("Execute command %s with args %v success, cost %v", command, args, cost)
 	return string(output), nil
 }
 
@@ -34,11 +34,11 @@ func ExecCommandContext(ctx context.Context, command string, args ...string) (st
 	cmd := exec.CommandContext(ctx, command, args...)
 
 	output, err := cmd.CombinedOutput()
-	cost := time.Since(start).Milliseconds()
+	cost := time.Since(start)
 
 	if err != nil {
 		if errors.Is(ctx.Err(), context.DeadlineExceeded) {
-			log.Printf("Execute command %s with args %v timeout, cost %dms", command, args, cost)
+			log.Printf("Execute command %s with args %v timeout, cost %v", command, args, cost)
 			return string(output), context.DeadlineExceeded
 		}
 
@@ -48,7 +48,7 @@ func ExecCommandContext(ctx context.Context, command string, args ...string) (st
 		}
 
 		if exitCode == 200 {
-			log.Printf("Execute command %s with args %v ok, cost %dms", command, args, cost)
+			log.Printf("Execute command %s with args %v ok, cost %v", command, args, cost)
 			return string(output), nil
 		}
 
@@ -56,6 +56,6 @@ func ExecCommandContext(ctx context.Context, command string, args ...string) (st
 		return "", err
 	}
 
-	log.Printf("Execute command %s with args %v success, cost %dms", command, args, cost)
+	log.Printf("Execute command %s with args %v success, cost %v", command, args, cost)
 	return string(output), nil
 }

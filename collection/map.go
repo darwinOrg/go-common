@@ -1,5 +1,24 @@
 package dgcoll
 
+func TransMap2List[T comparable, K any, V any](mp map[T]K, mapFunc BiFunction[T, K, V]) []V {
+	if len(mp) == 0 {
+		return []V{}
+	}
+
+	list := make([]V, 0, len(mp))
+
+	for t, k := range mp {
+		v := mapFunc(t, k)
+		list = append(list, v)
+	}
+
+	return list
+}
+
+func TransMap2Set[T comparable, K any, V comparable](mp map[T]K, mapFunc BiFunction[T, K, V]) []V {
+	return DeDupToSet(TransMap2List(mp, mapFunc))
+}
+
 func Trans2NewMap[T comparable, K any, V any](mp map[T]K, mapFunc Function[K, V]) map[T]V {
 	if len(mp) == 0 {
 		return map[T]V{}

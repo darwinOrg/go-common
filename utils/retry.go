@@ -2,13 +2,12 @@ package utils
 
 import "time"
 
-func Retry(fn func() error, maxCount int, interval time.Duration) {
-	for i := 0; i < maxCount; i++ {
-		err := fn()
-		if err == nil {
-			break
+func Retry(maxTimes int, sleepInterval time.Duration, fn func() error) {
+	for i := 0; i < maxTimes; i++ {
+		if err := fn(); err == nil {
+			return
 		}
 
-		time.Sleep(interval)
+		time.Sleep(sleepInterval)
 	}
 }

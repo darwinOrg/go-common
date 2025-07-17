@@ -345,6 +345,33 @@ func SplitToInts[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 |
 	return utils.MustConvertJsonStringToList[T](jsonStr)
 }
 
+func Sum[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](slice []T) T {
+	if len(slice) == 0 {
+		return 0
+	}
+
+	var sum T
+	for _, t := range slice {
+		sum += t
+	}
+
+	return sum
+}
+
+func Range[T int | uint | int8 | uint8 | int16 | uint16 | int32 | uint32 | int64 | uint64](from, to T) []T {
+	if from > to {
+		return []T{}
+	}
+
+	size := to - from + 1
+	slice := make([]T, size)
+	for i := from; i <= to; i++ {
+		slice[i-from] = i
+	}
+
+	return slice
+}
+
 func Shuffle[T any](slice []T) {
 	if len(slice) == 0 {
 		return
@@ -365,6 +392,25 @@ func Remove[T comparable](slice []T, elements []T) []T {
 	return FilterList(slice, func(t T) bool {
 		return !Contains(elements, t)
 	})
+}
+
+func RemoveAt[T any](slice []T, index int) []T {
+	if index < 0 || index > len(slice)-1 {
+		return slice
+	}
+
+	// move forward
+	copy(slice[index:], slice[index+1:])
+	slice = slice[:len(slice)-1]
+
+	// capacity reduction
+	if cap(slice) >= len(slice)*2 {
+		newSlice := make([]T, len(slice))
+		copy(newSlice, slice)
+		return newSlice
+	}
+
+	return slice
 }
 
 func Partition[T any](s []T, n int) [][]T {

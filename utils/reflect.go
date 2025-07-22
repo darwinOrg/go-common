@@ -64,7 +64,14 @@ func FilterZeroFields(obj any, excludeFields ...string) []string {
 }
 
 func ReflectAllFieldValuePointers(obj any) []any {
-	val := reflect.ValueOf(obj).Elem()
+	tpe := reflect.TypeOf(obj)
+	val := reflect.ValueOf(obj)
+
+	for tpe.Kind() == reflect.Ptr {
+		tpe = tpe.Elem()
+		val = val.Elem()
+	}
+
 	ptrs := make([]any, 0, val.NumField())
 
 	for i := 0; i < val.NumField(); i++ {
@@ -76,7 +83,14 @@ func ReflectAllFieldValuePointers(obj any) []any {
 }
 
 func ReflectAllFieldValues(obj any) []any {
-	val := reflect.ValueOf(obj).Elem()
+	tpe := reflect.TypeOf(obj)
+	val := reflect.ValueOf(obj)
+
+	for tpe.Kind() == reflect.Ptr {
+		tpe = tpe.Elem()
+		val = val.Elem()
+	}
+
 	fieldValues := make([]any, 0, val.NumField())
 
 	for i := 0; i < val.NumField(); i++ {

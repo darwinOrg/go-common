@@ -65,11 +65,24 @@ func FilterZeroFields(obj any, excludeFields ...string) []string {
 
 func ReflectAllFieldValuePointers(obj any) []any {
 	val := reflect.ValueOf(obj).Elem()
-	var ptrs []any
+	ptrs := make([]any, 0, val.NumField())
+
 	for i := 0; i < val.NumField(); i++ {
 		fieldPtr := val.Field(i).Addr().Interface()
 		ptrs = append(ptrs, fieldPtr)
 	}
 
 	return ptrs
+}
+
+func ReflectAllFieldValues(obj any) []any {
+	val := reflect.ValueOf(obj).Elem()
+	fieldValues := make([]any, 0, val.NumField())
+
+	for i := 0; i < val.NumField(); i++ {
+		fieldValue := val.Field(i).Interface()
+		fieldValues = append(fieldValues, fieldValue)
+	}
+
+	return fieldValues
 }

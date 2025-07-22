@@ -5,6 +5,10 @@ import (
 )
 
 func IsFieldsAllZero(obj any, excludeFields ...string) bool {
+	if obj == nil {
+		return true
+	}
+
 	v := reflect.ValueOf(obj)
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
@@ -34,8 +38,12 @@ func IsFieldsAllZero(obj any, excludeFields ...string) bool {
 }
 
 func FilterZeroFields(obj any, excludeFields ...string) []string {
+	if obj == nil {
+		return []string{}
+	}
+
 	v := reflect.ValueOf(obj)
-	if v.Kind() == reflect.Ptr {
+	for v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
 
@@ -64,6 +72,10 @@ func FilterZeroFields(obj any, excludeFields ...string) []string {
 }
 
 func ReflectAllFieldValuePointers(obj any) []any {
+	if obj == nil {
+		return []any{}
+	}
+
 	tpe := reflect.TypeOf(obj)
 	val := reflect.ValueOf(obj)
 
@@ -83,6 +95,10 @@ func ReflectAllFieldValuePointers(obj any) []any {
 }
 
 func ReflectAllFieldValues(obj any) []any {
+	if obj == nil {
+		return []any{}
+	}
+
 	tpe := reflect.TypeOf(obj)
 	val := reflect.ValueOf(obj)
 

@@ -82,7 +82,11 @@ func (ctx *DgContext) WithValue(parent context.Context, key, val any) {
 	ctx.inner = ctxWV
 }
 
-func (ctx *DgContext) InnerContext() context.Context {
+func (ctx *DgContext) SetInnerContext(inner context.Context) {
+	ctx.inner = inner
+}
+
+func (ctx *DgContext) GetInnerContext() context.Context {
 	return ctx.inner
 }
 

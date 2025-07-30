@@ -41,7 +41,7 @@ func FlatMapToList[T any, V any](slice []T, mapFunc Function[T, []V]) []V {
 		return []V{}
 	}
 
-	list := make([]V, 0, len(slice))
+	list := make([]V, 0)
 	for _, t := range slice {
 		vs := mapFunc(t)
 		for _, v := range vs {
@@ -71,10 +71,29 @@ func DeDupToSet[T comparable](slice []T) []T {
 
 	mp := map[T]struct{}{}
 	set := make([]T, 0)
-	for _, v := range slice {
+	for _, t := range slice {
+		if _, ok := mp[t]; !ok {
+			set = append(set, t)
+			mp[t] = struct{}{}
+		}
+	}
+
+	return set
+}
+
+func FilterDuplicates[T any, V comparable](slice []T, mapFunc Function[T, V]) []T {
+	if len(slice) == 0 {
+		return slice
+	}
+
+	mp := map[V]T{}
+	set := make([]T, 0)
+
+	for _, t := range slice {
+		v := mapFunc(t)
 		if _, ok := mp[v]; !ok {
-			set = append(set, v)
-			mp[v] = struct{}{}
+			mp[v] = t
+			set = append(set, t)
 		}
 	}
 
@@ -94,7 +113,7 @@ func Extract2Map[T any, K comparable, V any](slice []T, keyFunc Function[T, K], 
 		return map[K]V{}
 	}
 
-	mp := map[K]V{}
+	mp := make(map[K]V, len(slice))
 	for _, t := range slice {
 		k := keyFunc(t)
 		v := valueFunc(t)

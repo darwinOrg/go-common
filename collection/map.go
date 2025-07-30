@@ -83,7 +83,7 @@ func ExtractMapValues[K comparable, V any](mp map[K]V) []V {
 		return []V{}
 	}
 
-	var values []V
+	values := make([]V, 0, len(mp))
 	for _, v := range mp {
 		values = append(values, v)
 	}

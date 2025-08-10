@@ -17,11 +17,17 @@ func ConvertBeanToJsonString(obj any) (string, error) {
 
 func MustConvertBeanToJsonString(obj any) string {
 	jsonBytes, _ := json.Marshal(obj)
+	if jsonBytes == nil {
+		return ""
+	}
 	return string(jsonBytes)
 }
 
 func MustConvertBeanToJsonStringPretty(obj any) string {
 	jsonBytes, _ := json.MarshalIndent(obj, "", "	")
+	if jsonBytes == nil {
+		return ""
+	}
 	return string(jsonBytes)
 }
 
@@ -104,6 +110,9 @@ func ConvertJsonStringToMap(str string) (map[string]any, error) {
 
 func MustConvertJsonStringToMap(str string) map[string]any {
 	mp, _ := ConvertJsonStringToMap(str)
+	if mp == nil {
+		return map[string]any{}
+	}
 	return mp
 }
 
@@ -118,6 +127,9 @@ func ConvertJsonBytesToMap(bytes []byte) (map[string]any, error) {
 
 func MustConvertJsonBytesToMap(bytes []byte) map[string]any {
 	mp, _ := ConvertJsonBytesToMap(bytes)
+	if mp == nil {
+		return map[string]any{}
+	}
 	return mp
 }
 
@@ -189,7 +201,6 @@ func MustConvertBeanToJsonStringWithoutEscaping(obj any) string {
 	if err != nil {
 		return ""
 	}
-
 	return str
 }
 

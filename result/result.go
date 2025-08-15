@@ -57,6 +57,14 @@ func ToResult[T any](data T, err error) *Result[T] {
 	}
 }
 
+func SimpleToResult(err error) *Result[*Void] {
+	if err == nil {
+		return SimpleSuccess()
+	} else {
+		return SimpleFailByError(err)
+	}
+}
+
 func Fail[T any](code int, message string) *Result[T] {
 	return &Result[T]{
 		Success: false,

@@ -3,6 +3,7 @@ package result
 import (
 	"encoding/json"
 	"errors"
+
 	dgerr "github.com/darwinOrg/go-common/enums/error"
 	dgsys "github.com/darwinOrg/go-common/sys"
 )
@@ -46,6 +47,14 @@ func Success[T any](data T) *Result[T] {
 
 func SimpleSuccess() *Result[*Void] {
 	return simpleSuccess
+}
+
+func ToResult[T any](data T, err error) *Result[T] {
+	if err == nil {
+		return Success[T](data)
+	} else {
+		return FailByError[T](err)
+	}
 }
 
 func Fail[T any](code int, message string) *Result[T] {

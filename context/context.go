@@ -2,13 +2,15 @@ package dgctx
 
 import (
 	"context"
-	"github.com/darwinOrg/go-common/utils"
 	"sync"
 	"time"
+
+	"github.com/darwinOrg/go-common/utils"
 )
 
 type DgContext struct {
 	TraceId       string  `json:"traceId,omitempty"`
+	SpanId        string  `json:"spanId,omitempty"`
 	UserId        int64   `json:"userId,omitempty"`
 	OpId          int64   `json:"opId,omitempty"`
 	RunAs         int64   `json:"runAs,omitempty"`

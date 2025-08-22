@@ -3,6 +3,7 @@ package constants
 const (
 	Profile        = "profile"
 	TraceId        = "trace-id"
+	SpanId         = "span-id"
 	UID            = "uid"
 	OpId           = "op-id"
 	RunAs          = "run-as"

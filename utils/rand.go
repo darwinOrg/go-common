@@ -2,6 +2,7 @@ package utils
 
 import (
 	cr "crypto/rand"
+	"encoding/hex"
 	"errors"
 	"math/rand"
 )
@@ -82,4 +83,18 @@ func RandomBytes(length int) ([]byte, error) {
 	}
 
 	return b, nil
+}
+
+func MustRandomW3cTraceId() string {
+	traceId, _ := RandomW3cTraceId()
+	return traceId
+}
+
+func RandomW3cTraceId() (string, error) {
+	bytes, err := RandomBytes(16)
+	if err != nil {
+		return "", err
+	}
+
+	return hex.EncodeToString(bytes), nil
 }

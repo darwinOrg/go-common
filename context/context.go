@@ -37,8 +37,7 @@ type DgContext struct {
 }
 
 func SimpleDgContext() *DgContext {
-	traceId, _ := utils.RandomLetter(32)
-	return &DgContext{TraceId: traceId}
+	return &DgContext{TraceId: utils.MustRandomW3cTraceId()}
 }
 
 func WithTimeout(parent context.Context, timeout time.Duration) (*DgContext, context.CancelFunc) {

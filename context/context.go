@@ -30,6 +30,7 @@ type DgContext struct {
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	NotPrintLog   bool    `json:"-"`
 	NotLogSQL     bool    `json:"-"`
+	EnableTracer  bool    `json:"-"`
 	superRight    bool
 	inner         context.Context
 	safeExtra     sync.Map

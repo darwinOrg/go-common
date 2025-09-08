@@ -127,8 +127,14 @@ func (ctx *DgContext) HasSuperRight() bool {
 
 func (ctx *DgContext) Clone() *DgContext {
 	clone := utils.MustConvertToNewBeanByJson[DgContext](ctx)
+	clone.NotLogSQL = ctx.NotLogSQL
+	clone.NotPrintLog = ctx.NotPrintLog
+	clone.EnableTracer = ctx.EnableTracer
 	clone.superRight = ctx.superRight
 	clone.unsafeExtra = ctx.unsafeExtra
+	if ctx.inner != nil {
+		clone.inner = context.Background()
+	}
 	ctx.safeExtra.Range(func(key, val any) bool {
 		clone.safeExtra.Store(key, val)
 		return true

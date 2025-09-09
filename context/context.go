@@ -28,6 +28,8 @@ type DgContext struct {
 	Product       int     `json:"product,omitempty"`
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
+	Source        string  `json:"source,omitempty"`
+	Since         int64   `json:"since,omitempty"`
 	NotPrintLog   bool    `json:"-"`
 	NotLogSQL     bool    `json:"-"`
 	EnableTracer  bool    `json:"-"`

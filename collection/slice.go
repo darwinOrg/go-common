@@ -447,14 +447,14 @@ func Partition[T any](s []T, n int) [][]T {
 	return rt
 }
 
-func FilterNil[T any](s []T) []T {
-	if AllMatch(s, func(t T) bool {
+func FilterNil[T any](s []*T) []*T {
+	if AllMatch(s, func(t *T) bool {
 		return t != nil
 	}) {
 		return s
 	}
 
-	var rt []T
+	var rt []*T
 	for _, v := range s {
 		if v != nil {
 			rt = append(rt, v)

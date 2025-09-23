@@ -448,6 +448,12 @@ func Partition[T any](s []T, n int) [][]T {
 }
 
 func FilterNil[T any](s []T) []T {
+	if AllMatch(s, func(t T) bool {
+		return t != nil
+	}) {
+		return s
+	}
+
 	var rt []T
 	for _, v := range s {
 		if v != nil {

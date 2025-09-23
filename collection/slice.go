@@ -1,10 +1,11 @@
 package dgcoll
 
 import (
-	"github.com/darwinOrg/go-common/utils"
 	"math/rand"
 	"strconv"
 	"strings"
+
+	"github.com/darwinOrg/go-common/utils"
 )
 
 func FilterList[T any](slice []T, predicate Predicate[T]) []T {
@@ -443,5 +444,15 @@ func Partition[T any](s []T, n int) [][]T {
 		rt = append(rt, s[i:end])
 	}
 
+	return rt
+}
+
+func FilterNil[T any](s []T) []T {
+	var rt []T
+	for _, v := range s {
+		if v != nil {
+			rt = append(rt, v)
+		}
+	}
 	return rt
 }

@@ -12,3 +12,14 @@ func Retry(maxTimes int, sleepInterval time.Duration, fn func() error) (err erro
 	}
 	return
 }
+
+func RetryWithIndex(maxTimes int, sleepInterval time.Duration, fn func(i int) error) (err error) {
+	for i := 0; i < maxTimes; i++ {
+		if err = fn(i); err == nil {
+			return
+		}
+
+		time.Sleep(sleepInterval)
+	}
+	return
+}

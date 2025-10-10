@@ -103,6 +103,10 @@ func (ctx *DgContext) GetExtraValue(key string) any {
 	return val
 }
 
+func (ctx *DgContext) DelExtraValue(key string) {
+	ctx.safeExtra.Delete(key)
+}
+
 func (ctx *DgContext) SetUnsafeExtraKeyValue(key string, val any) {
 	if ctx.unsafeExtra == nil {
 		ctx.unsafeExtra = make(map[string]any)

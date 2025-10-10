@@ -123,6 +123,14 @@ func (ctx *DgContext) GetUnsafeExtraValue(key string) any {
 	return ctx.unsafeExtra[key]
 }
 
+func (ctx *DgContext) DelUnsafeExtraValue(key string) {
+	if ctx.unsafeExtra == nil {
+		return
+	}
+
+	delete(ctx.unsafeExtra, key)
+}
+
 func (ctx *DgContext) SetSuperRight(superRight bool) {
 	ctx.superRight = superRight
 }

@@ -18,7 +18,7 @@ func FormUrlEncodedParams[V any](paramPairs []*model.KeyValuePair[string, V]) st
 	return uv.Encode()
 }
 
-func MapToUrlQueryString[V any](params map[string]string) string {
+func MapToUrlQueryString(params map[string]string) string {
 	uv := url.Values{}
 	for key, value := range params {
 		uv.Set(key, value)

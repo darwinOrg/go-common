@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"archive/zip"
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
@@ -330,4 +331,69 @@ func GetFileBaseWithoutExt(filename string) string {
 
 func ReplaceFileExt(filename, toExt string) string {
 	return filename[:strings.Index(filename, ".")] + toExt
+}
+
+// AddFileToZip 将单个文件添加到 zip.Writer
+func AddFileToZip(zw *zip.Writer, filename, targetPath string) error {
+	file, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	// 获取文件信息
+	info, err := file.Stat()
+	if err != nil {
+		return err
+	}
+
+	// 创建 zip 文件头
+	header, err := zip.FileInfoHeader(info)
+	if err != nil {
+		return err
+	}
+
+	// 设置压缩路径（在 zip 中的路径）
+	header.Name = filepath.ToSlash(targetPath)
+
+	// 设置压缩方法（可选）
+	header.Method = zip.Deflate
+
+	writer, err := zw.CreateHeader(header)
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(writer, file)
+	return err
+}
+
+// SimpleAddFilesToZip 简单地将多个文件直接添加到zip文件
+func SimpleAddFilesToZip(zipPath string, files []string) error {
+	// 创建输出 ZIP 文件
+	zipFile, err := os.Create(zipPath)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = zipFile.Close()
+	}()
+
+	// 创建 zip.Writer
+	zipWriter := zip.NewWriter(zipFile)
+	defer func() {
+		_ = zipWriter.Close()
+	}()
+
+	for _, file := range files {
+		targetPath := filepath.Base(file)
+		err = AddFileToZip(zipWriter, file, targetPath)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

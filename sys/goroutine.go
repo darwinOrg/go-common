@@ -9,6 +9,8 @@ import (
 	"runtime"
 	"strconv"
 	"sync"
+
+	dgctx "github.com/darwinOrg/go-common/context"
 )
 
 var goroutineSpace = []byte("goroutine ")
@@ -137,4 +139,29 @@ func cutoff64(base int) uint64 {
 		return 0
 	}
 	return (1<<64-1)/uint64(base) + 1
+}
+
+type RoutineRecoverProcessor func(ctx *dgctx.DgContext, name string, err any)
+
+var routineRecoverProcessor RoutineRecoverProcessor
+
+func RegisterRoutineRecoverProcessor(processor RoutineRecoverProcessor) {
+	routineRecoverProcessor = processor
+}
+
+func RunRoutine(ctx *dgctx.DgContext, name string, fn func()) {
+	if routineRecoverProcessor == nil {
+		go fn()
+		return
+	}
+
+	go func() {
+		defer func() {
+			if err := recover(); err != nil {
+				routineRecoverProcessor(ctx, name, err)
+			}
+		}()
+
+		fn()
+	}()
 }

@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"log"
 	"runtime"
 	"strconv"
 	"sync"
@@ -143,18 +144,17 @@ func cutoff64(base int) uint64 {
 
 type RoutineRecoverProcessor func(ctx *dgctx.DgContext, name string, err any)
 
-var routineRecoverProcessor RoutineRecoverProcessor
+var defaultRoutineRecoverProcessor = func(ctx *dgctx.DgContext, name string, err any) {
+	log.Printf("运行 %s 协程报致命错误: %v", name, err)
+}
+
+var routineRecoverProcessor = defaultRoutineRecoverProcessor
 
 func RegisterRoutineRecoverProcessor(processor RoutineRecoverProcessor) {
 	routineRecoverProcessor = processor
 }
 
 func RunRoutine(ctx *dgctx.DgContext, name string, fn func()) {
-	if routineRecoverProcessor == nil {
-		go fn()
-		return
-	}
-
 	go func() {
 		defer func() {
 			if err := recover(); err != nil {

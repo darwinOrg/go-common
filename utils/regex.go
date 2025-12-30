@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	mobileRegexStr   = `(\+?86[-.\s_]*)?$?(1[3-9]\d[-.\s_]*\d{4}[-.\s_]*\d{4}|1[3-9]\d[-.\s_]*\d{3}[-.\s_]*\d{5})$?`
+	mobileRegexStr   = `(\+?86[-.\s_]*)?$?(1[3-9]\d[-.\s_]*\d{4}[-.\s_]*\d{4}|1[3-9]\d[-.\s_]*\d{3}[-.\s_]*\d{5}|1[3-9]\d{2}[-.\s_]*\d{3}[-.\s_]*\d{4}|1[3-9]\d{2}[-.\s_]*\d{4}[-.\s_]*\d{3}|1[3-9]\d[-.\s_]*\d{5}[-.\s_]*\d{3})$?`
 	mobileRegex      = regexp.MustCompile(mobileRegexStr)
 	exactMobileRegex = regexp.MustCompile(fmt.Sprintf(`^%s$`, mobileRegexStr))
 

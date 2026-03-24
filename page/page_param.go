@@ -1,5 +1,10 @@
 package page
 
+var (
+	MaxPageParam   = &PageParam{PageNo: 1, PageSize: 10000}
+	FirstPageParam = &PageParam{PageNo: 1, PageSize: 1}
+)
+
 type PageParam struct {
 	PageNo   int    `json:"pageNo" form:"pageNo" binding:"required,gt=0" remark:"页码"`
 	PageSize int    `json:"pageSize" form:"pageSize" binding:"required,gt=0" remark:"每页记录数"`

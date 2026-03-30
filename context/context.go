@@ -30,6 +30,7 @@ type DgContext struct {
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	Source        string  `json:"source,omitempty"`
 	Since         int64   `json:"since,omitempty"`
+	OutUserId     string  `json:"outUserId,omitempty"`
 	NotPrintLog   bool    `json:"-"`
 	NotLogSQL     bool    `json:"-"`
 	EnableTracer  bool    `json:"-"`

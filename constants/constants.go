@@ -28,6 +28,7 @@ const (
 	Ticket         = "ticket"
 	Source         = "source"
 	Since          = "since"
+	OutUserId      = "out-uid"
 )
 
 const (

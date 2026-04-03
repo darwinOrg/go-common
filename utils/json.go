@@ -228,3 +228,23 @@ func MergeJsonStrings(jsonStrings ...string) (string, error) {
 
 	return string(mergedJSON), nil
 }
+
+func MustStructJsonToMap(v any) map[string]any {
+	result, _ := StructJsonToMap(v)
+	return result
+}
+
+func StructJsonToMap(v any) (map[string]any, error) {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return nil, err
+	}
+
+	var result map[string]any
+	err = json.Unmarshal(data, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

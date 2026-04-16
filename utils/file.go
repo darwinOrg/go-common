@@ -4,6 +4,7 @@ import (
 	"archive/zip"
 	"bytes"
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"io"
@@ -396,4 +397,31 @@ func SimpleAddFilesToZip(zipPath string, files []string) error {
 	}
 
 	return nil
+}
+
+func FileToBase64(filePath string) (string, error) {
+	// 打开文件
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", err
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	// 读取文件内容
+	fileInfo, err := file.Stat()
+	if err != nil {
+		return "", err
+	}
+	fileSize := fileInfo.Size()
+	buffer := make([]byte, fileSize)
+	_, err = io.ReadFull(file, buffer)
+	if err != nil {
+		return "", err
+	}
+
+	// 编码为 Base64
+	encoded := base64.StdEncoding.EncodeToString(buffer)
+	return encoded, nil
 }

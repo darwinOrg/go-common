@@ -24,6 +24,16 @@ type KeyValuePair[K any, V any] struct {
 	Value V `json:"value" remark:"值"`
 }
 
+type CodeValuePair[K any, V any] struct {
+	Code  K `json:"code" remark:"编码"`
+	Value V `json:"value" remark:"值"`
+}
+
+type NameValuePair[K any, V any] struct {
+	Name  K `json:"name" remark:"名称"`
+	Value V `json:"value" remark:"值"`
+}
+
 func (pair *IdNamePair) String() string {
 	js, err := json.Marshal(pair)
 	if err != nil {

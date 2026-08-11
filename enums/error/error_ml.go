@@ -1,5 +1,7 @@
 package dgerr
 
+import "fmt"
+
 type DgErrorML struct {
 	Code        int
 	MessageCode string
@@ -19,7 +21,11 @@ func (e *DgErrorML) Error() string {
 		return ""
 	}
 
-	return e.MessageCode
+	if e.Cause == nil {
+		return e.MessageCode
+	}
+
+	return fmt.Sprintf("%s - %v", e.MessageCode, e.Cause)
 }
 
 func NewDgErrorML(code int, msgCode string) *DgErrorML {

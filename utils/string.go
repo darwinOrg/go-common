@@ -73,3 +73,14 @@ func CalcTextSimilarity(first, second string, percent *float64) int {
 func IsNumber(s string) bool {
 	return numberRegexp.MatchString(s)
 }
+
+func KeepDigits(s string) string {
+	var b strings.Builder
+	b.Grow(len(s)) // 预分配内存，避免小字符串反复扩容
+	for _, r := range s {
+		if r >= '0' && r <= '9' {
+			b.WriteRune(r)
+		}
+	}
+	return b.String()
+}

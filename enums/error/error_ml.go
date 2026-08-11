@@ -3,6 +3,15 @@ package dgerr
 type DgErrorML struct {
 	Code        int
 	MessageCode string
+	Cause       error
+}
+
+func (e *DgErrorML) WithCause(err error) *DgErrorML {
+	if e == nil {
+		return nil
+	}
+
+	return &DgErrorML{Code: e.Code, MessageCode: e.MessageCode, Cause: err}
 }
 
 func (e *DgErrorML) Error() string {
@@ -27,17 +36,25 @@ func SimpleDgErrorML(msgCode string) *DgErrorML {
 	}
 }
 
-var (
-	SYSTEM_ERROR_ML = &DgErrorML{5001, "common.system_error"}
-	SYSTEM_BUSY_ML  = &DgErrorML{5002, "common.system_invalid"}
-	TIME_OUT_ML     = &DgError{5003, "common.time_out"}
+func SimpleDgErrorMLWithCause(msgCode string, err error) *DgErrorML {
+	return &DgErrorML{
+		Code:        -1,
+		MessageCode: msgCode,
+		Cause:       err,
+	}
+}
 
-	ARGUMENT_NOT_VALID_ML    = &DgErrorML{4001, "common.argument_not_valid"}
-	DUPLICATE_PRIMARY_KEY_ML = &DgErrorML{4004, "common.duplicate_primary_key"}
-	NOT_LOGIN_IN_ML          = &DgErrorML{4006, "common.not_login_in"}
-	USER_NOT_EXISTS_ML       = &DgErrorML{4007, "common.user_not_exist"}
-	NO_PERMISSION_ML         = &DgErrorML{4009, "common.no_permission"}
-	ILLEGAL_OPERATION_ML     = &DgErrorML{4010, "common.illegal_operation"}
-	RECORD_EXISTS_ML         = &DgErrorML{4013, "common.record_exists"}
-	RECORD_NOT_EXISTS_ML     = &DgErrorML{4014, "common.record_not_exists"}
+var (
+	SYSTEM_ERROR_ML = &DgErrorML{Code: 5001, MessageCode: "common.system_error"}
+	SYSTEM_BUSY_ML  = &DgErrorML{Code: 5002, MessageCode: "common.system_invalid"}
+	TIME_OUT_ML     = &DgErrorML{Code: 5003, MessageCode: "common.time_out"}
+
+	ARGUMENT_NOT_VALID_ML    = &DgErrorML{Code: 4001, MessageCode: "common.argument_not_valid"}
+	DUPLICATE_PRIMARY_KEY_ML = &DgErrorML{Code: 4004, MessageCode: "common.duplicate_primary_key"}
+	NOT_LOGIN_IN_ML          = &DgErrorML{Code: 4006, MessageCode: "common.not_login_in"}
+	USER_NOT_EXISTS_ML       = &DgErrorML{Code: 4007, MessageCode: "common.user_not_exist"}
+	NO_PERMISSION_ML         = &DgErrorML{Code: 4009, MessageCode: "common.no_permission"}
+	ILLEGAL_OPERATION_ML     = &DgErrorML{Code: 4010, MessageCode: "common.illegal_operation"}
+	RECORD_EXISTS_ML         = &DgErrorML{Code: 4013, MessageCode: "common.record_exists"}
+	RECORD_NOT_EXISTS_ML     = &DgErrorML{Code: 4014, MessageCode: "common.record_not_exists"}
 )

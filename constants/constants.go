@@ -1,7 +1,6 @@
 package constants
 
 const (
-	Profile        = "profile"
 	TraceId        = "trace-id"
 	SpanId         = "span-id"
 	UID            = "uid"
@@ -13,9 +12,6 @@ const (
 	Platform       = "platform"
 	UserAgent      = "user_agent"
 	Lang           = "lang"
-	GoId           = "goid"
-	PageNo         = "pageNo"
-	PageSize       = "pageSize"
 	Token          = "token"
 	ShareToken     = "s-token"
 	RemoteIp       = "remote-ip"
@@ -29,6 +25,11 @@ const (
 	Source         = "source"
 	Since          = "since"
 	OutUserId      = "out-uid"
+
+	GoId     = "goid"
+	Profile  = "profile"
+	PageNo   = "pageNo"
+	PageSize = "pageSize"
 )
 
 const (

@@ -19,17 +19,17 @@ func (r *Result[T]) String() string {
 	j, err := json.Marshal(r)
 	if err != nil {
 		return err.Error()
-	} else {
-		return string(j)
 	}
+
+	return string(j)
 }
 
 func (r *Result[T]) ToError() error {
-	if !r.Success {
-		return dgerr.NewDgError(r.Code, r.Message)
+	if r.Success {
+		return nil
 	}
 
-	return nil
+	return dgerr.NewDgError(r.Code, r.Message)
 }
 
 var simpleSuccess = &Result[*Void]{
@@ -52,17 +52,17 @@ func SimpleSuccess() *Result[*Void] {
 func ToResult[T any](data T, err error) *Result[T] {
 	if err == nil {
 		return Success[T](data)
-	} else {
-		return FailByError[T](err)
 	}
+
+	return FailByError[T](err)
 }
 
 func SimpleToResult(err error) *Result[*Void] {
 	if err == nil {
 		return SimpleSuccess()
-	} else {
-		return SimpleFailByError(err)
 	}
+
+	return SimpleFailByError(err)
 }
 
 func Fail[T any](code int, message string) *Result[T] {
@@ -85,13 +85,13 @@ func FailByError[T any](err error) *Result[T] {
 	var dgError *dgerr.DgError
 	if errors.As(err, &dgError) {
 		return FailByDgError[T](dgError)
-	} else {
-		if dgsys.IsProd() || dgsys.IsPre() {
-			return FailByDgError[T](dgerr.SYSTEM_ERROR)
-		} else {
-			return SimpleFail[T](err.Error())
-		}
 	}
+
+	if dgsys.IsProd() || dgsys.IsPre() {
+		return FailByDgError[T](dgerr.SYSTEM_ERROR)
+	}
+
+	return SimpleFail[T](err.Error())
 }
 
 func FailByDgError[T any](err *dgerr.DgError) *Result[T] {

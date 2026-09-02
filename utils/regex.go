@@ -12,6 +12,8 @@ var (
 	exactMobileRegex = regexp.MustCompile(fmt.Sprintf(`^%s$`, mobileRegexStr))
 
 	emailRegex = regexp.MustCompile(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}`)
+
+	idCardRegex = regexp.MustCompile(`[1-9][0-9]{5}(?:19|20)[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])[0-9]{3}[0-9Xx]`)
 )
 
 func IsMobile(mobile string) bool {
@@ -37,4 +39,12 @@ func ContainsEmail(text string) bool {
 
 func ExtractEmails(text string) []string {
 	return emailRegex.FindAllString(text, -1)
+}
+
+func ContainsIDCard(text string) bool {
+	return idCardRegex.MatchString(text)
+}
+
+func ExtractIDCards(text string) []string {
+	return idCardRegex.FindAllString(text, -1)
 }

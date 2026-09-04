@@ -23,6 +23,7 @@ const (
 	TargetPlatform = "target-platform"
 	Ticket         = "ticket"
 	Source         = "source"
+	Client         = "client"
 	Since          = "since"
 	OutUserId      = "out-uid"
 
@@ -33,6 +34,7 @@ const (
 )
 
 const (
-	DateFormatMonthDay   = "01-02"
-	DateFormatMonthDayCn = "01月02日"
+	DateFormatMonthDay       = "01-02"
+	DateFormatMonthDayCn     = "01月02日"
+	DateFormatYearMonthDayCn = "2006年01月02日"
 )

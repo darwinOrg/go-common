@@ -13,14 +13,12 @@ type DgContext struct {
 	SpanId        string  `json:"spanId,omitempty"`
 	UserId        int64   `json:"userId,omitempty"`
 	OpId          int64   `json:"opId,omitempty"`
-	RunAs         int64   `json:"runAs,omitempty"`
 	Roles         string  `json:"roles,omitempty"`
 	BizTypes      int     `json:"bizTypes,omitempty"`
 	GroupId       int64   `json:"groupId,omitempty"`
 	Platform      string  `json:"platform,omitempty"`
 	UserAgent     string  `json:"userAgent,omitempty"`
 	Lang          string  `json:"lang,omitempty"`
-	GoId          uint64  `json:"goId,omitempty"`
 	Token         string  `json:"token,omitempty"`
 	ShareToken    string  `json:"shareToken,omitempty"`
 	RemoteIp      string  `json:"remoteIp,omitempty"`
@@ -29,6 +27,7 @@ type DgContext struct {
 	Products      []int   `json:"products,omitempty"`
 	DepartmentIds []int64 `json:"departmentIds,omitempty"`
 	Source        string  `json:"source,omitempty"`
+	Client        string  `json:"client,omitempty"`
 	Since         int64   `json:"since,omitempty"`
 	OutUserId     string  `json:"outUserId,omitempty"`
 	NotPrintLog   bool    `json:"-"`

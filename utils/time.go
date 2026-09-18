@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -95,4 +96,11 @@ func PreYear(t time.Time) time.Time {
 
 func PreYears(t time.Time, years int) time.Time {
 	return t.AddDate(-years, 0, 0)
+}
+
+func SimpleFormatDuration(d time.Duration) string {
+	if d >= time.Second {
+		return fmt.Sprintf("%.2fs", d.Seconds())
+	}
+	return fmt.Sprintf("%.2fms", float64(d.Microseconds())/1000)
 }

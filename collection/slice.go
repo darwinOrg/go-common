@@ -66,7 +66,7 @@ func FlatMapToSet[T any, V comparable](slice []T, mapFunc Function[T, []V]) []V 
 }
 
 func DeDupToSet[T comparable](slice []T) []T {
-	if len(slice) == 0 {
+	if len(slice) < 2 {
 		return slice
 	}
 
@@ -83,7 +83,7 @@ func DeDupToSet[T comparable](slice []T) []T {
 }
 
 func FilterDuplicates[T any, V comparable](slice []T, mapFunc Function[T, V]) []T {
-	if len(slice) == 0 {
+	if len(slice) < 2 {
 		return slice
 	}
 
